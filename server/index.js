@@ -8,15 +8,12 @@ app.use(bodyParser.json());
 app.use(cors());
 
 //API routes
-// const todo = require('./routes/api/v1/todo');
-// const timer = require('./routes/api/v1/timer');
-// app.use('/api/v1/todo',todo);
-// app.use('/api/v1/timer',timer);
-
-//sample
-app.get('/',(req,res)=>{
-  res.send('hello')
-})
+const dashboard = require('./routes/api/v1/dashboard');
+const todo = require('./routes/api/v1/todo');
+const timer = require('./routes/api/v1/timer');
+app.use('/api/v1/dashboard',dashboard);
+app.use('/api/v1/todo',todo);
+app.use('/api/v1/timer',timer);
 
 //handle production
 if(process.env.NODE_ENV === 'produnction'){
