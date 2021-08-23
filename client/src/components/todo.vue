@@ -1,3 +1,149 @@
 <template>
-  <div>this is todo</div>
+  <div class="todo">
+    <div class="tabbar-wrapper">
+      <router-link 
+      class="tab"
+      tag="div"
+      v-for="tab in tabList" 
+      v-bind:key="tab.language"
+      v-bind:to="tab.language"
+      v-on:click="tabChange(tab.language)"
+      exact-active-class="router-link-active"
+      >{{tab.language}}
+      </router-link>
+      <div 
+      type="button" 
+      class="lang-add"
+      v-on:click="isModal = true"
+      >＋</div>
+      <div 
+      v-if="isModal"
+      class="modal" 
+      >
+        <div class="modal-content">
+          <div class="modal-body">
+            <select class="select">
+              <option 
+              v-for="lang in selectable_lang"
+              v-bind:key="lang.language"
+              >{{lang.language}}</option>
+            </select>
+          </div>            
+          <input 
+          type="button" 
+          value="close"
+          v-on:click="isModal = false">
+          <input 
+          type="button" 
+          value="追加する"
+          v-on:click="langAdd()">
+        </div>
+      </div>
+
+    </div>
+    <router-view></router-view>
+  </div>
 </template>
+
+<script>
+import _ from 'lodash';
+
+export default {
+  data(){
+    return {
+      tabList:[
+        {language:'JavaScript'},
+        {language:'Node.js'},
+      ],
+      selectable_lang:[],
+      isModal:false,
+    }
+  },
+  created(){
+    const initialUrl = this.tabList[0].language;
+    this.$router.push(`/${initialUrl}`).catch(() => {});
+    this.lang_filter();
+  },
+  methods:{
+    lang_filter(){
+      const atlas_lang = [
+        {language:'JavaScript'},
+        {language:'Node.js'},
+        {language:'React.js'},
+        {language:'TypeScript'},
+        {language:'Vue.js'}
+      ];
+
+      const target = this.tabList
+      this.selectable_lang = atlas_lang.filter( element=>{
+        // if match found return false
+        return _.findIndex(target, {'language': element.language}) !== -1 ? false : true;
+      });
+    },
+    langAdd(){
+      const lang = document.querySelector('.select').value;
+      this.tabList.push({
+        language:lang
+      });
+      this.isModal = false;
+      this.$router.push(`/${lang}`);
+      this.lang_filter();
+    }
+  },
+}
+</script>
+
+<style scoped>
+.todo{
+  flex: 1;
+  height: 100vh;
+}
+
+.tabbar-wrapper{
+  background-color: #ccff33;
+  display: flex;
+  margin-bottom: 0;
+  height:50px;
+}
+
+.tab {
+  margin-left:30px;
+  line-height:50px;
+  cursor:pointer;
+}
+
+.router-link-active{
+  border-bottom:5px solid #38b000;
+}
+
+.lang-add{
+  align-self: center;
+  margin-left:30px;
+  margin-bottom: 17px;
+  width:30px;
+  height: 30px;
+  font-size: 30px;
+  color:#004b23;
+  cursor:pointer;
+}
+
+.modal {
+  display:block;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.5);
+}
+
+
+.modal-content{
+  background-color: white;
+  width: 500px;
+  margin: 40% auto;
+}
+
+</style>

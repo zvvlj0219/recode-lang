@@ -22,11 +22,43 @@ export default new Router({
     {
       path:'/todo',
       name:'todo',
-      component:todo
+      component:todo,
+      children:[
+        {
+          path:'/JavaScript',
+          name:'JavaScript',
+          component:()=> import(/* webpackChunkName:"js"*/ 
+          './components/languages/JavaScript')
+        },
+        {
+          path:'/Node.js',
+          name:'Node.js',
+          component:()=>import(/* webpackChunkName:"node"*/ 
+          './components/languages/Node')
+        },
+        {
+          path:'/TypeScript',
+          name:'TypeScript',
+          component:()=>import(/* webpackChunkName:"ts"*/ 
+          './components/languages/TypeScript')
+        },
+        {
+          path:'/React.js',
+          name:'React.js',
+          component:()=>import(/* webpackChunkName:"react"*/ 
+          './components/languages/React')
+        },
+        {
+          path:'/Vue.js',
+          name:'Vue.js',
+          component:()=>import(/* webpackChunkName:"vue"*/ 
+         './components/languages/Vue')
+        },
+      ]
     },
     {
-      path:'*',
-      redirect:'/dashboard'
+      path:'/todo/*',
+      redirect:'/todo'
     }
   ]
 })
