@@ -56,10 +56,6 @@ export default new Router({
         },
       ]
     },
-    {
-      path:'/todo/*',
-      redirect:'/todo'
-    }
   ]
 })
 
