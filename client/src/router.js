@@ -4,6 +4,7 @@ import dashboard from './components/dashboard';
 import timer from './components/timer';
 import todo from './components/todo';
 
+//load vue-router
 Vue.use(Router)
 
 export default new Router({

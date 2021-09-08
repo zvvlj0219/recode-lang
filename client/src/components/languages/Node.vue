@@ -8,8 +8,7 @@
       v-on:click="all_delete()"
       >
     </div>
-    <div v-show="todos" class="task-message">未完了のタスクがあります</div>
-    <div v-show="!todos" class="no-task-message">タスクを追加してダッシュボードに記録しよう</div>
+    <div class="msg">{{msg}}</div>
     <div class="task-list">
       <div
         class="task"
@@ -63,6 +62,7 @@ export default {
   data(){
     return{
       lang:'Node.js',
+      msg:'',
       todos:[],
       newtask_text:'',
       isActive:false
@@ -74,7 +74,16 @@ export default {
   methods:{
     async init(){
       try{
-        this.todos = await todoService.getTodos(this.lang);
+        const res = await todoService.getTodos(this.lang);
+        const msg = document.querySelector('.msg');
+        if(res[0]){
+          this.msg = '未完了のタスクがあります';
+          msg.classList.add('task-message')
+        }else{
+          this.msg = 'タスクを追加してダッシュボードに記録しよう'
+          msg.classList.add('no-task-message')
+        }
+        this.todos = res;
       }catch(e){
         console.log('error')
       }
