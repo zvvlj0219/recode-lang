@@ -107,7 +107,6 @@ export default {
 
 <style scoped>
 .todo{
-  flex: 1;
   height: 100vh;
 }
 
@@ -115,6 +114,7 @@ export default {
   background-color: #ccff33;
   display: flex;
   margin-bottom: 0;
+  width:100vw;
   height:50px;
 }
 
@@ -157,5 +157,24 @@ export default {
   width: 500px;
   margin: 40% auto;
 }
+
+@media (min-width:576px) {
+  .todo{
+    width:520px;
+  }
+}
+
+@media (min-width:768px){
+  .todo{
+    width:590px;
+  }
+}
+
+@media (min-width:992px) {
+  .todo{
+    width:760px;
+  }
+}
+
 
 </style>
