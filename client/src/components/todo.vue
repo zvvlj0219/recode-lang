@@ -8,6 +8,7 @@
       v-bind:key="tab.language"
       v-bind:to="tab.language"
       v-on:click="tabChange(tab.language)"
+      
       exact-active-class="router-link-active"
       >{{tab.language}}
       </router-link>
@@ -39,55 +40,66 @@
           v-on:click="langAdd()">
         </div>
       </div>
-
     </div>
-    <router-view></router-view>
+    <router-view v-on:langDelete="lang_delete"></router-view>
   </div>
 </template>
 
 <script>
 import _ from 'lodash';
+import all_langs from '../modules/languages.js';
+import todoService from '../modules/todoService.js';
 
 export default {
   data(){
     return {
-      tabList:[
-        {language:'JavaScript'},
-        {language:'Node.js'},
-      ],
+      email:'sample1234@mouse.com',
+      tabList:[],
       selectable_lang:[],
       isModal:false,
     }
   },
   created(){
-    const initialUrl = this.tabList[0].language;
-    this.$router.push(`/${initialUrl}`).catch(() => {});
-    this.lang_filter();
+    this.init();
   },
   methods:{
-    lang_filter(){
-      const atlas_lang = [
-        {language:'JavaScript'},
-        {language:'Node.js'},
-        {language:'React.js'},
-        {language:'TypeScript'},
-        {language:'Vue.js'}
-      ];
-
-      const target = this.tabList
-      this.selectable_lang = atlas_lang.filter( element=>{
-        // if match found return false
-        return _.findIndex(target, {'language': element.language}) !== -1 ? false : true;
-      });
+    async init(){
+      try{
+        //get tabList
+        const res = await todoService.getLang();
+        this.tabList = res.list;
+        //routing
+        const initialUrl = this.tabList[0].language;
+        this.$router.push(`/${initialUrl}`).catch(() => {});
+        //compare arrays
+        const target = this.tabList
+        this.selectable_lang = all_langs.filter(element=>{
+          // if match found return false
+          return _.findIndex(target, {'language': element.language}) !== -1 ? false : true;
+        });
+      }catch(e){
+        console.log('error')
+      }
     },
-    langAdd(){
+    async langAdd(){
       const lang = document.querySelector('.select').value;
       this.tabList.push({
         language:lang
       });
       this.isModal = false;
+      await todoService.updateLang(this.tabList);
       this.$router.push(`/${lang}`);
-      this.lang_filter();
+    },
+    async lang_delete(lang){
+      try{
+        const refleshedList = this.tabList.filter(element =>{
+          return (element.language !== `${lang}`);
+        });
+        await todoService.updateLang(refleshedList);
+        await this.init();
+      }catch(e){
+        console.log('error')
+      }
     }
   },
 }

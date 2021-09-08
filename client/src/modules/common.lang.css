@@ -1,0 +1,147 @@
+.task-management{
+  margin-top: 15px;
+  margin-left: 30px;
+}
+
+.all_delete{
+  width:90%;
+  height: 30px;
+  text-align: end;
+}
+
+.all_delete_botton{
+  text-align: center;
+  width:80px;
+  height:30px;
+  line-height: 25px;
+  background-color: #70e000;
+  border:none;
+}
+
+.task-message{
+  color:lightcoral;
+}
+
+.no-task-message{
+  color:blue;
+}
+
+.task-list{
+  padding-left: 10px;
+}
+
+.task{
+  display:flex;
+  justify-content:space-between;
+  width: 70%;
+  height:30px;
+  margin-top: 10px;
+  padding-top:2px;
+  padding-bottom:2px;
+}
+.task:hover{
+  border-top: 2px solid rgba(146, 146, 146,0.7 );
+  border-bottom: 2px solid rgba(146, 146, 146,0.7);
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.text{
+  margin-bottom:5px;
+}
+
+
+.text > span{
+  line-height:30px;
+  margin-left:7px;
+}
+
+.text > span.checked{
+  text-decoration:line-through;
+}
+
+.task-delete{
+  display:block;
+  line-height:30px;
+}
+
+.newtask_form {
+  width:400px;
+  height:30px;
+  margin:15px 15px;
+  
+}
+
+.newtask_text{
+  width:60%;
+  height:30px;
+  font-size:15px;
+}
+
+
+.newtask_button{
+  width:70px;
+  height:36px;
+  padding-top:4px;
+  background-color: #9ef01a;
+  border:none;
+}
+
+.newtask_button.cancel{
+  width:70px;
+  height:36px;
+  padding-top:4px;
+  background-color:#e63946;
+  border:none;
+}
+
+.hidden{
+  position:absolute;
+  bottom:0;
+  right:0;
+  width:85%;
+  height:80%;
+  z-index:1;
+}
+
+.taskadd{
+  margin-top:35px;
+  margin-left: 25%;
+  margin-bottom:20px;
+  border-radius: 50%;
+  width:45px;
+  height: 45px;
+  background-color: #9ef01a;
+  box-shadow:  3px 3px 3px 0 rgba(146, 146, 146, 0.5);
+  cursor:pointer;
+}
+
+.taskadd > span{
+  display: block;
+  text-align: center;
+  line-height: 45px;
+  font-size: 30px;
+  color:#007200;
+}
+
+.submit-button-wrapper{
+  margin-left: 30px;
+}
+
+.submit-button-wrapper > div{
+  color:dimgray
+}
+
+.submit-button{
+  margin-top:20px;
+  margin-left: 25%;
+  width:150px;
+  height: 40px;
+  font-size: 13px;
+  background-color: #70e000;
+  border:1px solid #70e000;
+  border-radius: 5px;
+  box-shadow:  2px 2px 1px 0 rgba(146, 146, 146, 0.5);
+  cursor:pointer;
+
+}
