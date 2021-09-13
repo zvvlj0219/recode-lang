@@ -13,6 +13,6 @@ export default {
 <style scoped>
 .router-wrapper{
   flex:1;
+  background-color:rgba(216,243,220,0.4);
 }
-
 </style>

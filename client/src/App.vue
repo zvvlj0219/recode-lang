@@ -33,7 +33,6 @@ body{
 /* main */
 .main{
   display: flex;
-  background-color:rgba(216,243,220,0.4);
 }
 </style>
 

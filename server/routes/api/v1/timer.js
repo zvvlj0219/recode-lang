@@ -2,8 +2,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
 
+//tentative account email
+const email = 'sample1234@mouse.com';
+
 // mongoose connect to mongoDB Atlas
-const uri = "mongodb+srv://zvvlj0219:se9108li07da13@cluster0.g2zyh.mongodb.net/test2?retryWrites=true&w=majority";
+const uri = "mongodb+srv://zvvlj0219:se9108li07da13@cluster0.g2zyh.mongodb.net/recode_langDB?retryWrites=true&w=majority";
 
 const options = {
 	useUnifiedTopology : true,
@@ -19,7 +22,7 @@ const timerSchema = new mongoose.Schema(
     timestamps:Object
   },
   {
-    collection:'timer'
+    collection:'recode'
   }
 );
 
@@ -29,7 +32,8 @@ const Timer = mongoose.model('Timer',timerSchema);
 //get posts
 router.get('/',async (req,res)=>{
   try{
-    const time = await Timer.find().limit(5);
+    //ここをtodo.jsを参考に修正、match project
+    const time = await Timer.find().limit(3);
     res.send(time);
   }catch(e){
     res.status(500).send();
@@ -42,6 +46,7 @@ router.post('/',async (req,res)=>{
     const data = {
       language:req.body.language,
       study_time:req.body.study_time,
+      created_at:'timer',
       timestamps:new Date()
     }
     const newTimer = await Timer.create(data);

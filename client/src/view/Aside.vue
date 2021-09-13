@@ -22,7 +22,8 @@ export default {
         {name:'タイマー',path:'/timer'},
         {name:'ToDoリスト',path:'/todo'},
         {name:'お知らせ',path:'/dashboard'},
-        {name:'ヘルプ',path:'/dashboard'}]
+        {name:'ヘルプ',path:'/dashboard'}
+      ]
     }
   }
 }
