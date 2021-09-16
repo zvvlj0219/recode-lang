@@ -8,7 +8,6 @@
       v-bind:key="tab.language"
       v-bind:to="tab.language"
       v-on:click="tabChange(tab.language)"
-      
       exact-active-class="router-link-active"
       >{{tab.language}}
       </router-link>

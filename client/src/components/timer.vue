@@ -4,8 +4,22 @@
       <div class="clock-wrapper">
         <div class="outer-circle"></div>
         <div class="inner-circle"></div>
+        <!--
+        <transition
+          v-bind:css="false"
+          v-if="clockEvent"
+
+          v-on:enter="enter"
+          v-on:after-enter="afterEnter"
+
+          v-on:before-leave="beforeLeave"
+          v-on:leave="leave"
+        >
+          <div class="inner-circle"></div>
+        </transition>
+        -->
       </div>
-      <div class="start">start</div>
+      <timerComponent/>
     </div>
     <div class="recode-wrapper">
       <p>過去の記録</p>
@@ -20,6 +34,8 @@
 </template>
 
 <script>
+import timerComponent from './timerComponent';
+
 export default {
   name:'timer',
   data(){
@@ -27,9 +43,46 @@ export default {
       language:'JavaScript',
       timer:30,
     }
+  },
+  components:{
+    timerComponent,
   }
 }
 </script>
+
+<style scoped>
+/*transition*/
+.clock-enter,.clock-leave-to {
+  position:absolute;
+  top:75px;
+  left:60px;
+  width:300px;
+  height:300px;
+  border-radius:50%;
+  background-color:lightyellow;
+  z-index: 2;
+
+}
+
+.clock-enter-active,.clock-leave-active {
+  transform: scale(1.2);
+
+}
+
+.clock-enter-to,.clock-leave {
+  position:absolute;
+  top:75px;
+  left:60px;
+  width:300px;
+  height:300px;
+  border-radius:50%;
+  background-color:lightyellow;
+  z-index: 2;
+
+}
+
+
+</style>
 
 <style scoped>
 .router-content {
@@ -52,6 +105,7 @@ export default {
   height:350px;
   border-radius:50%;
   background-color:lightgreen;
+  z-index: 1;
 }
 .inner-circle {
   position:absolute;
@@ -61,6 +115,8 @@ export default {
   height:300px;
   border-radius:50%;
   background-color:lightyellow;
+  z-index: 2;
+  transition: transform 0.5s ease;
 
 }
 
@@ -191,9 +247,9 @@ export default {
   }
 
 }
-@media (min-width:1400px) {
+@media (min-width:1300px) {
   .router-content{
-    width:1100px;
+    width:1000px;
     height:80%;
     margin:20px auto;
     padding: 10px;

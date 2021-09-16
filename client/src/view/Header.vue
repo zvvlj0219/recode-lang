@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <div class="title">RECODE-LANG</div>
+    <div class="title">RECORD-LANG</div>
     <div class="acount-wrapper">
       <div>sample1234@gamil</div>
       <div class="dropdown-list"></div>
