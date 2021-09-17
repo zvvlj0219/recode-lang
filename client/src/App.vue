@@ -30,6 +30,10 @@ export default {
 body{
   margin:0;
 }
+
+#id {
+  width:100%;
+}
 /* main */
 .main{
   display: flex;

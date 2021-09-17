@@ -1,5 +1,5 @@
 <template>
-  <div id="timerComponent">
+  <div class="timerComponent">
     <div class='timer_text'>
       <p  v-show="!active" class="setted_time">{{study_time}}</p>
       <p  v-show="active" class="time_left">{{time_left}}</p>

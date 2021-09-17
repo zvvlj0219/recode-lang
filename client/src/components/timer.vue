@@ -4,7 +4,6 @@
       <div class="clock-wrapper">
         <div class="outer-circle"></div>
         <div class="inner-circle"></div>
-        <!--
         <transition
           v-bind:css="false"
           v-if="clockEvent"
@@ -17,8 +16,9 @@
         >
           <div class="inner-circle"></div>
         </transition>
-        -->
       </div>
+    </div>
+    <div class="timerComponent_container">
       <timerComponent/>
     </div>
     <div class="recode-wrapper">
@@ -128,6 +128,15 @@ export default {
   border-radius:2%;
 }
 
+.timerComponent_container {
+  background-color:lightgrey;
+  border-radius:4%;
+}
+
+.timerComponent {
+  margin:0 auto;
+}
+
 .recode-wrapper {
   background-color:rgba(144,238,144,0.5);
   border-radius:4%;
@@ -137,18 +146,30 @@ export default {
 @media (max-width:576px) {
   .router-content {
     height:100vh;
+    width:100%;
     margin:15px 10px;
   }
 
   .timer {
-    height:480px;
+    height:450px;
+    width:95%;
     box-shadow:  3px 3px 3px 0 rgba(146, 146, 146, 0.5);
 
+  }
+
+  .timerComponent_container {
+    height:200px;
+    width:95%;
+  }
+
+  .timerComponent {
+    width:350px;
   }
 
   .recode-wrapper {
     margin-top:10px;
     height:250px;
+    width:95%;
     box-shadow:  3px 3px 3px 0 rgba(146, 146, 146, 0.5);
   
   }
@@ -157,39 +178,63 @@ export default {
 @media (min-width:576px) and (max-width:767px) {
   .router-content {
     height:100%;
+    width:100%;
     margin:15px 10px;
   }
 
   .timer {
     height:480px;
+    width:95%;
     box-shadow:  3px 3px 3px 0 rgba(146, 146, 146, 0.5);
  
+  }
+
+  .timerComponent_container {
+    height:200px;
+    width:95%;
+  }
+
+  .timerComponent {
+    width:310px;
   }
 
   .recode-wrapper {
     margin-top:10px;
     height:250px;
+    width:95%;
     box-shadow:  3px 3px 3px 0 rgba(146, 146, 146, 0.5);
   
   }
 
 }
 
-@media (min-width:768px) and (max-width:991px) {
+@media (min-width:768px) and (max-width:992px) {
   .router-content {
     height:100%;
+    width:100%;
     margin:15px 10px;
   }
 
   .timer {
     height:480px;
+    width:97%;
     box-shadow:  3px 3px 3px 0 rgba(146, 146, 146, 0.5);
   
+  }
+
+  .timerComponent_container {
+    height:200px;
+    width:97%;
+  }
+
+  .timerComponent {
+    width:400px;
   }
 
   .recode-wrapper {
     margin-top:10px;
     height:300px;
+    width:97%;
     box-shadow:  3px 3px 3px 0 rgba(146, 146, 146, 0.5);
   }
 
