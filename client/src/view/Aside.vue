@@ -44,7 +44,7 @@ export default {
 }
 
 /* Extra Small device (desktop, less than 576px) */
-@media (max-width:575px) {
+@media (max-width:576px) {
   .aside-menu{
     display: none;
   }

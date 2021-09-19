@@ -20,8 +20,10 @@ export default {
   background-color:#38b000;
   color:lightcyan;
   height: 45px;
+  width:100%;
   display: flex;
   justify-content: space-between;
+  z-index:10;
 }
 
 .title{
