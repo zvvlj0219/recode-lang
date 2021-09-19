@@ -3,20 +3,51 @@
     <div class="timer" >
       <div class="clock-wrapper">
         <div class="outer-circle"></div>
-        <div class="inner-circle"></div>
+        <div class="inner-circle">
+          <div class="circle-content">
+            <div class="selected_lang">{{selected_lang}}</div>
+            <div class="lang_logo">ロゴ:{{selected_lang}}</div>
+            <div class="config_lang">
+              <ModalComponent>
+                <template v-slot:config-lang>
+                  <div>ここに歯車</div>
+                </template>
+                <template v-slot:modal>
+                  <div>
+                    <ul class="radio-wrapper">
+                      <li 
+                        class="radio-list"
+                        v-for="lang in all_langs"
+                        v-bind:key="lang.language"
+                      >
+                        <input  
+                          type="radio" name="lang"
+                          v-model="selected_lang"
+                          v-bind:id="lang.language"
+                          v-bind:value="lang.language"
+                        >
+                        <label 
+                          v-bind:for="lang.language"
+                        >{{lang.language}}</label>
+                      </li>
+                    </ul>
+                  </div>
+                </template>
+              </ModalComponent>
+            </div>
+          </div>
+        </div>
         <transition
           v-bind:css="false"
           v-if="clockEvent"
           v-on:before-enter="beforeEnter"
           v-on:enter="enter"
-          v-on:enter-cancelled="enterCancelled"
           appear
         >
-          <div class="inner-circle"></div>
+          <div class="dummy-circle"></div>
         </transition>
       </div>
     </div>
-    <div class="timerComponent_container">
     <ModalComponent>
       <template v-slot:time>
         <div class='timer_text'>
@@ -71,19 +102,18 @@
         v-show="clockEvent"
         v-on:click="cancelTimer();clockEvent = false;"
       >cancel</div>
-      <div 
-        class="btn pause_btn"
-        v-show="clockEvent"
-        v-on:click="cancelTimer();clockEvent = false;"
-      >pause</div>
-      </div>
     </div>
     <div class="recode-wrapper">
       <p>過去の記録</p>
       <ul>
-        <li>111</li>
-        <li>222</li>
-        <li>333</li>
+        <li 
+          v-for="record in past_record"
+          v-bind:key="record"
+        >
+          {{record.language}}:
+          {{Math.floor(record.study_time)}}時間{{record.study_time*60}}分:
+          {{new Date(record.timestamps).getMonth()+1}}月{{new Date(record.timestamps).getDate()}}日
+        </li>
       </ul>
       <div class="recode"></div>
     </div>
@@ -91,23 +121,33 @@
 </template>
 
 <script>
-import ModalComponent from './ModalComponent'
+import ModalComponent from './ModalComponent';
+import all_langs from '../modules/languages.js';
+import timerService from '../modules/timerService.js';
 
 export default {
   name:'timer',
   data(){
     return {
-      language:'JavaScript',
-      timer:30,
+      selected_lang:'JavaScript',
+      all_langs:all_langs,
       clockEvent:false,
       setted_hour:'00',
       setted_minute:'25',
       time_left:'',
-      timeoutId:null
+      timeoutId:null,
+      past_record:[]
     }
   },
   components:{
     ModalComponent
+  },
+  async created(){
+    try{
+      this.past_record = await timerService.getTime();
+    }catch(e){
+      console.log(e)
+    }
   },
   filters:{
     adjustDigit(number){
@@ -115,22 +155,6 @@ export default {
         return `0${number}`;
       }
       return number;
-    }
-  },
-  watch:{
-    setted_hour(){
-      if(this.setted_hour == '00'){
-        this.study_time = `${this.setted_minute}:00`;
-      }else{
-        this.study_time = `${this.setted_hour}:${this.setted_minute}:00`;
-      }
-    },
-    setted_minute(){
-      if(this.setted_hour == '00'){
-        this.study_time = `${this.setted_minute}:00`;
-      }else{
-        this.study_time = `${this.setted_hour}:${this.setted_minute}:00`;
-      }
     }
   },
   methods:{
@@ -147,10 +171,6 @@ export default {
           done();
         }
       },30)
-    },
-    enterCancelled(el){
-      el.style.transform = 'scale(1)';
-
     },
     startTimer(){
       console.log(this.setted_hour,this.setted_minute);
@@ -171,6 +191,7 @@ export default {
 
       if(this.time_left == '00:00:00' || this.time_left == '00:00'){
         clearTimeout(this.timeoutId);
+        this.addRecord();
         this.clockEvent = false;
       }
       //経過時間
@@ -194,7 +215,14 @@ export default {
       this.timeoutId = null;
       this.clockEvent = false;
     },
-
+    async addRecord(){
+      try{
+        const setted_time = Number(this.setted_hour + this.setted_minute/60);
+        await timerService.insertTime(this.selected_lang,setted_time);
+      }catch(e){
+        console.log(e);
+      }
+    }
   }
 }
 </script>
@@ -230,7 +258,29 @@ export default {
   height:300px;
   border-radius:50%;
   background-color:lightyellow;
+  z-index: 3;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+.dummy-circle {
+  position:absolute;
+  top:75px;
+  left:60px;
+  width:300px;
+  height:300px;
+  border-radius:50%;
+  background-color:lightyellow;
   z-index: 2;
+}
+
+.circle-content {
+  width:200px;
+  height:200px;
+}
+
+.radio-wrapper {
+  list-style:none;
 }
 
 .timer {
