@@ -10,43 +10,51 @@ const uri = "mongodb+srv://zvvlj0219:se9108li07da13@cluster0.g2zyh.mongodb.net/r
 
 const options = {
 	useUnifiedTopology : true,
-	useNewUrlParser : true
+	useNewUrlParser : true,
+  useFindAndModify : false
 }
 mongoose.connect(uri,options);
 
 //mongoose schema
 const timerSchema = new mongoose.Schema(
   {
+    email:String,
     language:String,
+    created_at:String,
     study_time:Number,
     timestamps:Object
   },
   {
-    collection:'recode'
+    collection:'record'
   }
 );
 
 //mongoose model
 const Timer = mongoose.model('Timer',timerSchema);
 
-//get posts
+//get time
 router.get('/',async (req,res)=>{
   try{
-    //ここをtodo.jsを参考に修正、match project
-    const time = await Timer.find().limit(3);
-    res.send(time);
+    const time = await Timer.find(
+      {created_at:'timer',email:email}
+    )
+    .sort({timestamps: -1})
+    .select(['language','study_time','timestamps'])
+    .limit(4);
+    res.send(time)
   }catch(e){
     res.status(500).send();
   }
 });
 
-//add posts
+//add time
 router.post('/',async (req,res)=>{
   try{
     const data = {
+      email:email,
       language:req.body.language,
-      study_time:req.body.study_time,
       created_at:'timer',
+      study_time:req.body.study_time,
       timestamps:new Date()
     }
     const newTimer = await Timer.create(data);

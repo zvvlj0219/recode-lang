@@ -19,6 +19,7 @@ mongoose.connect(uri,options);
 //mongoose schema todoSchema
 const todoSchema = new mongoose.Schema(
   {
+    email:String,
     language:String,
     created_at:String,
     text:String,
@@ -27,7 +28,7 @@ const todoSchema = new mongoose.Schema(
     timestamps:Object
   },
   {
-    collection:'recode'
+    collection:'record'
   }
 );
 
@@ -50,20 +51,10 @@ const Accounts = mongoose.model('Accounts',accountsSchema);
 //get todo
 router.get('/',async (req,res)=>{
   try{
-    const res1 = await Accounts.aggregate([
-      {
-        $match: {
-          email:email
-        },
-      },
-      {
-        $project:{
-          _id:0,
-          list:1
-        }
-      }
-    ]);
-    console.log(...res1);
+    const res1 = await Accounts.find({
+      email:email
+    })
+    .select(['list']);
     res.send(...res1)
   }catch(e){
     res.status(500).send()
@@ -72,23 +63,12 @@ router.get('/',async (req,res)=>{
 
 //get todo routes
 router.get('/:lang',async (req,res)=>{
-  const res2 = await Todo.aggregate([
-    {
-      $match :
-      {
-        language:req.params.lang,
-        created_at:'todo'
-      }
-    },
-    {
-      $project:
-      {
-        text:1,
-        checked:1
-      }
-    },
-  ])
-  console.log(res2);
+  const res2 = await Todo.find({
+    email:email,
+    language:req.params.lang,
+    created_at:'todo',
+  })
+  .select(['text','checked']);
   res.send(res2)
 })
 
@@ -96,6 +76,7 @@ router.get('/:lang',async (req,res)=>{
 router.post('/',async (req,res)=>{
   try{
     const data = {
+      email:email,
       language:req.body.language,
       created_at:'todo',
       text:req.body.text,
@@ -106,7 +87,6 @@ router.post('/',async (req,res)=>{
     const newTodo = await Todo.create(data);
     await newTodo.save();
     res.status(201).send(newTodo);
-    console.log(newTodo)
   }catch(e){
     res.status(400).send();
   }
