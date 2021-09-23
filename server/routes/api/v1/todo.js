@@ -6,7 +6,7 @@ const router = express.Router();
 const email = 'sample1234@mouse.com';
 
 // mongoose connect to mongoDB Atlas
-const uri = "mongodb+srv://zvvlj0219:se9108li07da13@cluster0.g2zyh.mongodb.net/recode_langDB?retryWrites=true&w=majority";
+const uri = require('../../../config');
 
 const options = {
 	useUnifiedTopology : true,

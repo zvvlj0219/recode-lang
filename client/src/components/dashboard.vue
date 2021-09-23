@@ -2,12 +2,25 @@
   <div class="dashboard">
     <div class="date">令和３年８月２日</div>
     <div class="content-wrapper">
-      <div class="graph" >graph</div>
+      <div class="graph" >
+        <Doughnut/>
+      </div>
       <div class="weekly">weekly</div>
       <div class="monthly">monthly</div>
     </div>
   </div>
 </template>
+
+<script>
+import Doughnut from './doughnuts.chart.vue';
+
+export default {
+  name:'dashboard',
+  components:{
+    Doughnut
+  }
+}
+</script>
 
 <style scoped>
 /* dashboard */
@@ -29,7 +42,6 @@
   .graph,.weekly,.monthly{
     width:80%;
     height: 300px;
-    background-color:darkgray;
     margin: 5px auto;
   }
 
@@ -44,7 +56,6 @@
   .graph,.weekly,.monthly{
     width:80%;
     height: 300px;
-    background-color:darkgray;
     margin: 5px auto;
   }
   .graph{
@@ -57,7 +68,6 @@
   .graph,.weekly,.monthly{    
     width:80%;
     height: 350px;
-    background-color:darkgray;
     margin: 5px auto;
   }
   .graph{
@@ -71,7 +81,6 @@
   .graph,.weekly,.monthly{
     width:80%;
     height: 350px;
-    background-color:darkgray;
     margin: 5px auto;
   }
   .graph{
@@ -96,7 +105,6 @@
     background-color: lightskyblue;
   }
   .graph {
-    background: hsl(0, 60%, 60%);
     grid-column: 1;
     grid-row: 1/5;
   }
