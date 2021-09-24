@@ -6,7 +6,7 @@ export default {
   extends:Doughnut,
   data(){
     return {
-      props:[
+      mongo:[
         {language:'JavaScript',study_time:1},
         {language:'React.js',study_time:2},
         {language:'Node.js',study_time:2},
@@ -15,29 +15,32 @@ export default {
       //{language:'JavaScript',study_time:2}の形式で
     }
   },
-  mounted () {
-    const labels = this.props.map(el=>{
+  props:{
+    study_data:Object
+  },
+  mounted(){
+    const labels = this.mongo.map(el=>{
       return el.language;
     })
 
     const lodash_object = all_langs.filter(element=>{
-      return _.findIndex(this.props, {'language': element.language}) !== -1 ;
+      return _.findIndex(this.mongo, {'language': element.language}) !== -1 ;
     })
     const backgroundColor =  lodash_object.map(el=>{
       return el.color;
     });
     
-    const study_time = this.props.map(el=>{
+    const study_time = this.mongo.map(el=>{
       return el.study_time;
     })
 
     const data = {
       labels:labels,
       datasets: [{
-        label: 'My First Dataset',
         data: study_time,
         backgroundColor:backgroundColor,
         borderWidth:2,
+        borderColor:'lightgrey',
         weight:1,
         hoverOffset: 4
       }]

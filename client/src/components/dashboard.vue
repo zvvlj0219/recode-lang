@@ -4,8 +4,13 @@
     <div class="content-wrapper">
       <div class="graph" >
         <Doughnut/>
+        <div>
+          ここに記録
+        </div>
       </div>
-      <div class="weekly">weekly</div>
+      <div class="weekly">
+        <Bar/>
+      </div>
       <div class="monthly">monthly</div>
     </div>
   </div>
@@ -13,11 +18,13 @@
 
 <script>
 import Doughnut from './doughnuts.chart.vue';
+import Bar from './Bar.chart.vue';
 
 export default {
   name:'dashboard',
   components:{
-    Doughnut
+    Doughnut,
+    Bar
   }
 }
 </script>
@@ -25,14 +32,12 @@ export default {
 <style scoped>
 /* dashboard */
 .dashboard{
-  background-color: yellowgreen;
   min-height: 100%;
   flex: 1;
   padding-bottom: 30px;
 }
 
 .date{
-  background-color: darkseagreen;
   text-align: center;
   margin-bottom: 20px;
 }
@@ -41,7 +46,7 @@ export default {
 @media (max-width:575px) {
   .graph,.weekly,.monthly{
     width:80%;
-    height: 300px;
+    height: 600px;
     margin: 5px auto;
   }
 
@@ -55,11 +60,11 @@ export default {
 @media (min-width: 576px) and (max-width: 768px) {
   .graph,.weekly,.monthly{
     width:80%;
-    height: 300px;
+    height: 600px;
     margin: 5px auto;
   }
   .graph{
-    height:400px;
+    height:600px;
   }
 }
 
@@ -67,7 +72,7 @@ export default {
 @media (min-width: 768px) and (max-width: 850px){
   .graph,.weekly,.monthly{    
     width:80%;
-    height: 350px;
+    height: 700px;
     margin: 5px auto;
   }
   .graph{
@@ -80,7 +85,7 @@ export default {
 @media (min-width: 850px) and (max-width: 1200px){  
   .graph,.weekly,.monthly{
     width:80%;
-    height: 350px;
+    height: 700px;
     margin: 5px auto;
   }
   .graph{
@@ -92,8 +97,7 @@ export default {
 /* Extra large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {
   .content-wrapper{
-    width:95%;
-    /* 1224pxくらいになっている */
+    width:1200px;
     height:95%;
     /* 657pxくらいになっている */
     margin: 0 auto;
@@ -102,7 +106,6 @@ export default {
     grid-template-columns: repeat(2, 48%);
     grid-template-rows: repeat(4,145px);
     gap:10px 20px;
-    background-color: lightskyblue;
   }
   .graph {
     grid-column: 1;
