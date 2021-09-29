@@ -3,15 +3,14 @@
     <div class="date">令和３年８月２日</div>
     <div class="content-wrapper">
       <div class="graph" >
-        <Doughnut/>
+        <Doughnut v-bind:today="today_records" />
         <div>
-          ここに記録
+          <div v-for="el in today_records" v-bind:key="el.id">{{el.language}}:{{el.study_time}}時間</div>
         </div>
       </div>
       <div class="weekly">
-        <Bar/>
+        <Bar v-bind:weekly="weekly_records" />
       </div>
-      <div class="monthly">monthly</div>
     </div>
   </div>
 </template>
@@ -19,12 +18,33 @@
 <script>
 import Doughnut from './doughnuts.chart.vue';
 import Bar from './Bar.chart.vue';
+import dashboardService from '../modules/dashboardService.js';
 
 export default {
   name:'dashboard',
+  data(){
+    return {
+      all_records:[],
+      today_records:[],
+      weekly_records:[],
+    }
+  },
   components:{
     Doughnut,
-    Bar
+    Bar,
+  },
+  async mounted(){
+    try{
+      this.all_records = await dashboardService.getRecord();
+      this.today_records =  dashboardService.aggregate_today(this.all_records);
+      this.weekly_records =  dashboardService.aggregate_weekly(this.all_records);
+      // console.log(this.all_records);
+      // console.log(this.today_records)
+      // console.log(this.weekly_records)
+
+    }catch(e){
+      console.log(e)
+    }
   }
 }
 </script>

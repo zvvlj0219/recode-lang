@@ -69,10 +69,10 @@
             v-model="setted_hour"
           >
             <option 
-              v-for="n in 21"
-              v-bind:key="n"
+              v-for="i in 21"
+              v-bind:key="i"
             >
-            {{n-1 | adjustDigit}}
+            {{i-1 | adjustDigit}}
             </option>
           </select>
           <span>時間</span>
@@ -108,14 +108,13 @@
       <ul>
         <li 
           v-for="record in past_record"
-          v-bind:key="record"
+          v-bind:key="record._id"
         >
           {{record.language}}:
           {{Math.floor(record.study_time)}}時間{{record.study_time*60}}分:
           {{new Date(record.timestamps).getMonth()+1}}月{{new Date(record.timestamps).getDate()}}日
         </li>
       </ul>
-      <div class="recode"></div>
     </div>
   </div>
 </template>
@@ -129,7 +128,7 @@ export default {
   name:'timer',
   data(){
     return {
-      selected_lang:'JavaScript',
+      selected_lang:'Node.js',
       all_langs:all_langs,
       clockEvent:false,
       setted_hour:'00',
