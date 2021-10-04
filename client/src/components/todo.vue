@@ -66,6 +66,8 @@ export default {
       try{
         //get tabList
         const res = await todoService.getLang();
+        console.log('list')
+        console.log(res)
         this.tabList = res.list;
         //routing
         const initialUrl = this.tabList[0].language;
@@ -78,6 +80,7 @@ export default {
         });
       }catch(e){
         console.log('error')
+        console.log(e)
       }
     },
     async langAdd(){

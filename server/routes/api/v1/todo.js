@@ -49,13 +49,17 @@ const Todo = mongoose.model('Todo',todoSchema);
 const Accounts = mongoose.model('Accounts',accountsSchema);
 
 //get todo
-router.get('/',async (req,res)=>{
+router.get('/', async (req,res)=>{
   try{
-    const res1 = await Accounts.find({
+    const list = await Accounts.find({
       email:email
+    },{
+      list:1,
+      _id:0
     })
     .select(['list']);
-    res.send(...res1)
+    console.log(list)
+    res.send(...list)
   }catch(e){
     res.status(500).send()
   }
@@ -63,13 +67,13 @@ router.get('/',async (req,res)=>{
 
 //get todo routes
 router.get('/:lang',async (req,res)=>{
-  const res2 = await Todo.find({
+  const todo = await Todo.find({
     email:email,
     language:req.params.lang,
     created_at:'todo',
   })
   .select(['text','checked']);
-  res.send(res2)
+  res.send(todo)
 })
 
 //add 
