@@ -25,7 +25,8 @@ const todoSchema = new mongoose.Schema(
     text:String,
     checked:Boolean,
     study_time:Number,
-    timestamps:Object
+    isDone:Boolean,
+    timestamps:Object,
   },
   {
     collection:'record'
@@ -51,32 +52,33 @@ const Accounts = mongoose.model('Accounts',accountsSchema);
 //get todo
 router.get('/', async (req,res)=>{
   try{
-    const list = await Accounts.find({
-      email:email
-    },{
-      list:1,
-      _id:0
+    const list = await Accounts.find(
+      {
+        email:email
+      },
+      {
+        list:1,
+        _id:0
+      }
+    ) .select(['list']);
+   
+    const todo = await Todo.find(
+      {
+        email:email,
+        created_at:'todo',
+      }
+    ).select(['language','text','checked']);
+
+    res.send({
+      list:list[0].list,
+      todo:todo
     })
-    .select(['list']);
-    console.log(list)
-    res.send(...list)
   }catch(e){
     res.status(500).send()
   }
 })
 
-//get todo routes
-router.get('/:lang',async (req,res)=>{
-  const todo = await Todo.find({
-    email:email,
-    language:req.params.lang,
-    created_at:'todo',
-  })
-  .select(['text','checked']);
-  res.send(todo)
-})
-
-//add 
+//add todo
 router.post('/',async (req,res)=>{
   try{
     const data = {
@@ -85,7 +87,8 @@ router.post('/',async (req,res)=>{
       created_at:'todo',
       text:req.body.text,
       checked:false,
-      study_time:1,    
+      study_time:1,  
+      isDone:false,  
       timestamps:new Date()
     }
     const newTodo = await Todo.create(data);
@@ -95,7 +98,6 @@ router.post('/',async (req,res)=>{
     res.status(400).send();
   }
 });
-
 
 //update checked
 router.put('/:id',async (req,res)=>{
@@ -109,6 +111,7 @@ router.put('/:id',async (req,res)=>{
     if(!result){
       return res.status(404).send();
     }
+    console.log('from :id isDone')
     res.send(result);
   }catch(e){
     res.status(500).send();
@@ -136,7 +139,8 @@ router.put('/',async (req,res)=>{
   }catch(e){
     res.status(500).send();
   }
-})
+});
+
 
 //delete by id or many
 router.delete('/',async (req,res)=>{

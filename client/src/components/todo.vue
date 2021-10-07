@@ -1,53 +1,73 @@
 <template>
   <div class="todo">
     <div class="tabbar-wrapper">
-      <router-link 
-      class="tab"
-      tag="div"
-      v-for="tab in tabList" 
-      v-bind:key="tab.language"
-      v-bind:to="tab.language"
-      v-on:click="tabChange(tab.language)"
-      exact-active-class="router-link-active"
-      >{{tab.language}}
-      </router-link>
-      <div 
-      type="button" 
-      class="lang-add"
-      v-on:click="isModal = true"
-      >＋</div>
-      <div 
-      v-if="isModal"
-      class="modal" 
+      <div  
+        class="tab"
+        v-for="tab in tabList" 
+        v-bind:key="tab.language"
+        v-on:click="tabChange(tab.language)"
+        v-bind:class="{linkActive: currentComponent == tab.language}"
       >
-        <div class="modal-content">
-          <div class="modal-body">
-            <select class="select">
-              <option 
-              v-for="lang in selectable_lang"
-              v-bind:key="lang.language"
-              >{{lang.language}}</option>
-            </select>
-          </div>            
-          <input 
-          type="button" 
-          value="close"
-          v-on:click="isModal = false">
-          <input 
-          type="button" 
-          value="追加する"
-          v-on:click="langAdd()">
-        </div>
+        {{tab.language}}
       </div>
+      <ModalComponent>
+        <template v-slot:title>
+        <div
+          class="lang-add"
+        >＋</div>
+        </template>
+        <template v-slot:modal>
+          <div class="modal-content">
+            <div class="modal-body">
+              <select 
+                class="select"
+                v-model="modal_lang"
+              >
+                <option 
+                v-for="lang in selectable_lang"
+                v-bind:key="lang.language"
+                >{{lang.language}}</option>
+              </select>
+            </div>            
+            <input 
+            type="button" 
+            value="close"
+            >
+            <input 
+            type="button" 
+            value="追加する"
+            v-on:click="langAdd()"
+            >
+          </div>
+        </template>
+      </ModalComponent>
     </div>
-    <router-view v-on:langDelete="lang_delete"></router-view>
+    <keep-alive>
+      <component 
+        v-bind:is="currentComponent"
+        v-on:langDelete="lang_delete"
+        v-on:taskAdd="taskAdd"
+        v-on:deleteTask="deleteTask"
+        v-bind:propsTodos="todos"
+      ></component>
+    </keep-alive>
   </div>
 </template>
 
+
 <script>
+//modules load
 import _ from 'lodash';
 import all_langs from '../modules/languages.js';
 import todoService from '../modules/todoService.js';
+import ModalComponent from './ModalComponent';
+
+//lang component load
+import Node from './languages/Node.vue';
+import React from './languages/React.vue';
+import Vue from './languages/Vue.vue';
+import JavaScript from './languages/JavaScript.vue';
+import TypeScript from './languages/TypeScript.vue';
 
 export default {
   data(){
@@ -55,42 +75,89 @@ export default {
       email:'sample1234@mouse.com',
       tabList:[],
       selectable_lang:[],
-      isModal:false,
+      modal_lang:null,
+      currentComponent:null,
+      todos:[]
     }
   },
-  created(){
-    this.init();
+  components:{
+    ModalComponent,
+    'Node.js':Node,
+    'React.js':React,
+    'Vue.js':Vue,
+    JavaScript,
+    TypeScript,
+  },
+  async created(){
+    await this.init();
+    await this.tabChange(this.tabList[0].language)
   },
   methods:{
     async init(){
       try{
-        //get tabList
-        const res = await todoService.getLang();
-        console.log('list')
-        console.log(res)
-        this.tabList = res.list;
-        //routing
-        const initialUrl = this.tabList[0].language;
-        this.$router.push(`/${initialUrl}`).catch(() => {});
+        //get tabList and todos
+        const response = await todoService.getLang();
+        
+        //分割代入
+        let {list} = response;
+        let {todo} = response;
+
+        //todo data 処理
+        let arr1 = [];
+        all_langs.forEach(el=>{
+          let obj = {language:el.language,todo:[]}
+          arr1.push(obj)
+        });
+        
+        arr1.forEach((el,index)=>{
+          let a1 = el.language;
+          todo.forEach(item=>{
+            let b2 = item.language;
+            if(a1 == b2){
+              arr1[index].todo.push(item);
+            }
+          })
+        });
+
+        //data 代入
+        this.tabList = list;
+        this.todos = arr1;
+
         //compare arrays
-        const target = this.tabList
         this.selectable_lang = all_langs.filter(element=>{
           // if match found return false
-          return _.findIndex(target, {'language': element.language}) !== -1 ? false : true;
+          return _.findIndex(list, {'language': element.language}) !== -1 ? false : true;
         });
+        this.modal_lang = this.selectable_lang[0].language;
       }catch(e){
-        console.log('error')
         console.log(e)
       }
     },
+    tabChange(lang){
+      this.currentComponent = lang;
+    },
     async langAdd(){
-      const lang = document.querySelector('.select').value;
       this.tabList.push({
-        language:lang
+        language:this.modal_lang
       });
-      this.isModal = false;
       await todoService.updateLang(this.tabList);
-      this.$router.push(`/${lang}`);
+      this.init()
+    },
+    async taskAdd(){
+      try{
+        await this.init();
+        this.tabChange(this.currentComponent)
+      }catch(e){
+        console.log(e)
+      }
+    },
+    async deleteTask(){
+      try{
+        await this.init();
+        this.tabChange(this.currentComponent)
+      }catch(e){
+        console.log(e)
+      }
     },
     async lang_delete(lang){
       try{
@@ -98,11 +165,12 @@ export default {
           return (element.language !== `${lang}`);
         });
         await todoService.updateLang(refleshedList);
-        await this.init();
+        this.init();
+        this.tabChange(this.tabList[0].language)
       }catch(e){
-        console.log('error')
+        console.log(e)
       }
-    }
+    },
   },
 }
 </script>
@@ -126,14 +194,14 @@ export default {
   cursor:pointer;
 }
 
-.router-link-active{
+.linkActive{
   border-bottom:5px solid #38b000;
 }
 
 .lang-add{
   align-self: center;
-  margin-left:30px;
-  margin-bottom: 17px;
+  margin-left:10px;
+  margin-top:3px;
   width:30px;
   height: 30px;
   font-size: 30px;
@@ -156,7 +224,7 @@ export default {
 
 .modal-content{
   background-color: white;
-  width: 500px;
+  width: 80%;
   margin: 40% auto;
 }
 
@@ -178,5 +246,11 @@ export default {
   }
 }
 
+/* modal style */
+#modalComponent{
+  height:100%;
+  width:100px;
+  margin-left:10px;
+}
 
 </style>

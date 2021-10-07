@@ -8,7 +8,12 @@
       v-on:click="all_delete()"
       >
     </div>
-    <div class="msg">{{msg}}</div>
+    <div 
+      class="msg"
+      v-bind:class="taskMessage ? 'task-message':'no-task-message'"
+    >
+      {{msg}}
+    </div>
     <div class="task-list">
       <div
         class="task"
@@ -63,29 +68,52 @@ export default {
     return{
       lang:'JavaScript',
       msg:'',
+      taskMessage:false,
       todos:[],
       newtask_text:'',
       isActive:false
     }
   },
+  props:{
+    propsTodos:{
+      type:Array
+    }
+  },
+  watch:{
+    propsTodos:{
+      handler(){
+        this.init();
+      },
+      deep:true
+    },
+    todos(){
+      this.toggle_message();
+    }
+  },
   created(){
     this.init();
+    this.toggle_message();
   },
   methods:{
-    async init(){
-      try{
-        const res = await todoService.getTodos(this.lang);
-        const msg = document.querySelector('.msg');
-        if(res[0]){
-          this.msg = '未完了のタスクがあります';
-          msg.classList.add('task-message')
-        }else{
-          this.msg = 'タスクを追加してダッシュボードに記録しよう'
-          msg.classList.add('no-task-message')
+    init(){
+      this.propsTodos.forEach(el=>{
+        if(this.lang == el.language){
+          let a = el.todo;
+          let b = [];
+          a.forEach(item=>{
+            b.push(item)
+          });
+          this.todos = b;
         }
-        this.todos = res;
-      }catch(e){
-        console.log('error')
+      });
+    },
+    toggle_message(){
+      if(this.todos[0]){
+        this.taskMessage = true;
+        this.msg = '未完了のタスクがあります';
+      }else{
+        this.taskMessage = false;
+        this.msg = 'タスクを追加してダッシュボードに記録しよう'
       }
     },
     async checked(id,checked){
@@ -112,33 +140,27 @@ export default {
     async taskAdd(){
       try{
         await todoService.insertTodos(this.lang,this.newtask_text);
-        await this.init();
+        this.$emit('taskAdd')
         this.isActive = false;
         this.newtask_text = '';
       }catch(e){
         console.log(e);
-        console.log('error from javascript.vue')
       }
     },
     async deleteTask(id){
       try{
         await todoService.commondelete(id,null);
-        await this.init();
-
+        this.$emit('deleteTask')
       }catch(e){
         console.log(e);
-        console.log('error from javascript.vue')
-
       }
     },
     async all_delete(){
       try{
         await todoService.commondelete(null,this.lang);
         this.$emit('langDelete',this.lang);
-        await this.init();
       }catch(e){
         console.log(e);
-        console.log('error from javascript.vue')
       }
     }
   }
