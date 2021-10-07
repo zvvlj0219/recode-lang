@@ -38,10 +38,6 @@ export default {
       this.all_records = await dashboardService.getRecord();
       this.today_records =  dashboardService.aggregate_today(this.all_records);
       this.weekly_records =  dashboardService.aggregate_weekly(this.all_records);
-      // console.log(this.all_records);
-      // console.log(this.today_records)
-      // console.log(this.weekly_records)
-
     }catch(e){
       console.log(e)
     }

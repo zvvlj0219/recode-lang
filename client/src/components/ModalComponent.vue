@@ -1,8 +1,7 @@
 <template>
   <div id="modalComponent">
     <div id="open" v-on:click="isModal = !isModal">
-      <slot name="time"></slot>
-      <slot name="config-lang"></slot>
+      <slot name="title"></slot>
     </div>
     <div id="mask" 
     v-on:click="isModal = !isModal"
@@ -27,11 +26,12 @@ export default {
 }
 </script>
 
-<style>
+<style >
 body {
 font-size: 16px;
 height: 1300px;
 }
+/*
 #open {
   cursor: pointer;
   width: 200px;
@@ -43,6 +43,7 @@ height: 1300px;
   position: relative;
   top: 30%;
 }
+*/
 #close {
   cursor: pointer;
   width: 200px;

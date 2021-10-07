@@ -9,7 +9,7 @@
             <div class="lang_logo">ロゴ:{{selected_lang}}</div>
             <div class="config_lang">
               <ModalComponent>
-                <template v-slot:config-lang>
+                <template v-slot:title>
                   <div>ここに歯車</div>
                 </template>
                 <template v-slot:modal>
@@ -49,7 +49,7 @@
       </div>
     </div>
     <ModalComponent>
-      <template v-slot:time>
+      <template v-slot:title>
         <div class='timer_text'>
           <div v-show="!clockEvent" class="setted_time">
             <div v-if="setted_hour !== '00'">
