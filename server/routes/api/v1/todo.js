@@ -66,6 +66,7 @@ router.get('/', async (req,res)=>{
       {
         email:email,
         created_at:'todo',
+        isDone:false
       }
     ).select(['language','text','checked']);
 
@@ -100,18 +101,17 @@ router.post('/',async (req,res)=>{
 });
 
 //update checked
-router.put('/:id',async (req,res)=>{
+router.put('/checked',async (req,res)=>{
   try{
     const result = await Todo.findByIdAndUpdate(
       //id
-      req.params.id,
+      req.body.id,
       //update
       {checked:req.body.checked}
     );
     if(!result){
       return res.status(404).send();
     }
-    console.log('from :id isDone')
     res.send(result);
   }catch(e){
     res.status(500).send();
@@ -119,7 +119,7 @@ router.put('/:id',async (req,res)=>{
 });
 
 //update tab lang
-router.put('/',async (req,res)=>{
+router.put('/list',async (req,res)=>{
   try{
     const list = req.body.list;
     const data = await Accounts.findOneAndUpdate(
@@ -131,8 +131,8 @@ router.put('/',async (req,res)=>{
           list:list
         }
       }
-    );
-    if(!data){
+      );
+      if(!data){
       return res.status(404).send();
     }
     res.send(data);
@@ -141,6 +141,27 @@ router.put('/',async (req,res)=>{
   }
 });
 
+//update isDone
+router.put('/isDone', (req,res)=>{
+  try{
+    const id = req.body.id;
+    id.forEach(async el=>{
+      await Todo.findByIdAndUpdate(
+        {
+          _id:el
+        },
+        {
+          $set:{
+            isDone:true
+          }
+        }
+      );
+    })
+    res.send()
+  }catch(e){
+    res.status(500).send();
+  }
+})
 
 //delete by id or many
 router.delete('/',async (req,res)=>{
@@ -159,7 +180,7 @@ router.delete('/',async (req,res)=>{
       }
       res.send(result);
     }catch(e){
-      console.log('error')
+      res.status(500).send();
     }
   }
   
@@ -172,9 +193,10 @@ router.delete('/',async (req,res)=>{
       }
       res.send(result);
     }catch(e){
-      console.log('error')
+      res.status(500).send();
     }
   }
 });
+
 
 module.exports = router;

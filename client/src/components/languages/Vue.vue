@@ -54,7 +54,7 @@
     v-if="todos"
     class="submit-button-wrapper">
       <div>完了したタスクはダッシュボードに追加できます</div>
-      <input type="button" class="submit-button" value="追加">
+      <input type="button" class="submit-button" value="追加" v-on:click="record">
     </div>
   </div>
 </template>
@@ -162,7 +162,21 @@ export default {
       }catch(e){
         console.log(e);
       }
-    }
+    },
+    async record(){
+      try{
+        const id = [];
+        this.todos.forEach(el=>{
+          if(el.checked == true){
+            id.push(el._id);
+          }
+        });
+        await todoService.updateIsDone(id);
+        await this.$emit('init');
+      }catch(e){
+        console.log(e)
+      }
+    },
   }
 }
 </script>
