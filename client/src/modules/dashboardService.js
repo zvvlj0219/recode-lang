@@ -25,13 +25,8 @@ class DashboardService {
     
     data.forEach(el=>{
       let day = new Date(el.timestamps).getDay();//曜日
-      // console.log(weekly_records[day].study_time);
-      // console.log(el.study_time)
       weekly_records[day].study_time += el.study_time;
     });
-    // console.log('weekly');
-    // console.log(weekly_records)
-    // console.log(typeof weekly_records)
     return weekly_records;
   }
   //aggregate data for today
@@ -75,9 +70,6 @@ class DashboardService {
         today_records[duplicatedIndex].study_time += add_time;
       }
     });
-    // console.log('today');
-    // console.log(today_records)
-    // console.log(typeof today_records)
     return today_records;
   }
 }

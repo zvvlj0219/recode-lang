@@ -23,17 +23,26 @@ class TodoService {
   
   //update todos
   static updateTodos(id,checked){
-    return axios.put(`${url}/${id}`,{
+    return axios.put(`${url}/checked`,{
+      id:id,
       checked:checked
     })
   }
 
   //update tab lang
   static updateLang(list){
-    return axios.put(url,{
+    return axios.put(`${url}/list`,{
       list:list
     })
   }
+
+  //update isDone
+  static updateIsDone(id){
+    return axios.put(`${url}/isDone`,{
+      id:id
+    })
+  }
+
   //delete by id or many
   static commondelete(id,lang){
     return axios.delete(url,{
@@ -44,5 +53,6 @@ class TodoService {
     })
   }
 }
-
+  
+  
 export default TodoService;

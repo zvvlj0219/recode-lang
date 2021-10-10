@@ -48,6 +48,7 @@
         v-on:langDelete="lang_delete"
         v-on:taskAdd="taskAdd"
         v-on:deleteTask="deleteTask"
+        v-on:init="init"
         v-bind:propsTodos="todos"
       ></component>
     </keep-alive>
