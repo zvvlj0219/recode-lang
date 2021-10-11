@@ -35,7 +35,23 @@ export default {
   },
   async mounted(){
     try{
-      this.all_records = await dashboardService.getRecord();
+      //一週間分のデータ
+      let response = await dashboardService.getRecord();
+
+      //分割代入
+      let {timer} = response;
+      let {todo} = response;
+
+      //データ代入
+      timer.forEach(el=>{
+        this.all_records.push(el);
+      });
+
+      todo.forEach(el=>{
+        this.all_records.push(el);
+      })
+
+      //aggregate records
       this.today_records =  dashboardService.aggregate_today(this.all_records);
       this.weekly_records =  dashboardService.aggregate_weekly(this.all_records);
     }catch(e){

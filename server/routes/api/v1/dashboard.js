@@ -16,7 +16,7 @@ const options = {
 mongoose.connect(uri,options);
 
 //mongoose schema
-const dashboardSchema = new mongoose.Schema(
+const dashboardTodoSchema = new mongoose.Schema(
   {
     email:String,
     language:String,
@@ -25,12 +25,26 @@ const dashboardSchema = new mongoose.Schema(
     timestamps:Object
   },
   {
-    collection:'record'
+    collection:'todo'
+  }
+);
+
+const dashboardTimerSchema = new mongoose.Schema(
+  {
+    email:String,
+    language:String,
+    created_at:String,
+    study_time:Number,
+    timestamps:Object
+  },
+  {
+    collection:'timer'
   }
 );
 
 //mongoose model
-const Dashboard = mongoose.model('Dashboard',dashboardSchema);
+const DashboardTodo = mongoose.model('DashboardTodo',dashboardTodoSchema);
+const DashboardTimer = mongoose.model('DashboardTimer',dashboardTimerSchema);
 
 //zeroday sixday
 let today = new Date();
@@ -48,7 +62,7 @@ sixday.setDate(zeroday.getDate()+6);
 //get dashboard
 router.get('/',async (req,res)=>{
   try{
-    const result = await Dashboard.find(
+    const timer = await DashboardTimer.find(
       {
         email:email,
         timestamps:{
@@ -58,7 +72,25 @@ router.get('/',async (req,res)=>{
       }
     )
     .select(['language','study_time','timestamps']);
-    res.send(result);
+
+    const todo = await DashboardTodo.find(
+      {
+        email:email,
+        timestamps:{
+          $gte:zeroday,
+          $lte:sixday
+        },
+        isDone:true
+      }
+    )
+    .select(['language','study_time','timestamps']);
+
+    console.log(timer)
+    console.log(todo)
+    res.send({
+      timer:timer,
+      todo:todo
+    });
   }catch(e){
     res.status(500).send();
   }
