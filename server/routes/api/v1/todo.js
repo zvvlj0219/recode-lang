@@ -29,7 +29,7 @@ const todoSchema = new mongoose.Schema(
     timestamps:Object,
   },
   {
-    collection:'record'
+    collection:'todo'
   }
 );
 
@@ -197,6 +197,5 @@ router.delete('/',async (req,res)=>{
     }
   }
 });
-
 
 module.exports = router;

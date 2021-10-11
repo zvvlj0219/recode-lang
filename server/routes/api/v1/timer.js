@@ -25,7 +25,7 @@ const timerSchema = new mongoose.Schema(
     timestamps:Object
   },
   {
-    collection:'record'
+    collection:'timer'
   }
 );
 
