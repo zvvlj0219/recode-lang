@@ -1,36 +1,11 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const router = express.Router();
+
+//mongoose schema
+const Timer = require('../../../model/timerModel');
 
 //tentative account email
 const email = 'sample1234@mouse.com';
-
-// mongoose connect to mongoDB Atlas
-const uri = require('../../../config');
-
-const options = {
-	useUnifiedTopology : true,
-	useNewUrlParser : true,
-  useFindAndModify : false
-}
-mongoose.connect(uri,options);
-
-//mongoose schema
-const timerSchema = new mongoose.Schema(
-  {
-    email:String,
-    language:String,
-    created_at:String,
-    study_time:Number,
-    timestamps:Object
-  },
-  {
-    collection:'timer'
-  }
-);
-
-//mongoose model
-const Timer = mongoose.model('Timer',timerSchema);
 
 //get time
 router.get('/',async (req,res)=>{

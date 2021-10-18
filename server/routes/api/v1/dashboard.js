@@ -1,50 +1,12 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const router = express.Router();
+
+//mongoose schema todoSchema and accountsSchema
+const Todo = require('../../../model/todoModel');
+const Timer = require('../../../model/timerModel');
 
 //tentative account email
 const email = 'sample1234@mouse.com';
-
-// mongoose connect to mongoDB Atlas
-const uri = require('../../../config');
-
-const options = {
-	useUnifiedTopology : true,
-	useNewUrlParser : true,
-  useFindAndModify : false
-}
-mongoose.connect(uri,options);
-
-//mongoose schema
-const dashboardTodoSchema = new mongoose.Schema(
-  {
-    email:String,
-    language:String,
-    created_at:String,
-    study_time:Number,
-    timestamps:Object
-  },
-  {
-    collection:'todo'
-  }
-);
-
-const dashboardTimerSchema = new mongoose.Schema(
-  {
-    email:String,
-    language:String,
-    created_at:String,
-    study_time:Number,
-    timestamps:Object
-  },
-  {
-    collection:'timer'
-  }
-);
-
-//mongoose model
-const DashboardTodo = mongoose.model('DashboardTodo',dashboardTodoSchema);
-const DashboardTimer = mongoose.model('DashboardTimer',dashboardTimerSchema);
 
 //zeroday sixday
 let today = new Date();
@@ -62,7 +24,7 @@ sixday.setDate(zeroday.getDate()+6);
 //get dashboard
 router.get('/',async (req,res)=>{
   try{
-    const timer = await DashboardTimer.find(
+    const timer = await Timer.find(
       {
         email:email,
         timestamps:{
@@ -73,7 +35,7 @@ router.get('/',async (req,res)=>{
     )
     .select(['language','study_time','timestamps']);
 
-    const todo = await DashboardTodo.find(
+    const todo = await Todo.find(
       {
         email:email,
         timestamps:{
