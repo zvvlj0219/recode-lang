@@ -1,15 +1,19 @@
 const express = require('express');
 const router = express.Router();
 
+//verify token function
+const verify = require('./verifyToken');
+
 //mongoose schema
 const Timer = require('../../../model/timerModel');
 
-//tentative account email
-const email = 'sample1234@mouse.com';
+//logged in  account email
+const email = process.env.LOGGEDIN_EMAIL;
 
 //get time
-router.get('/',async (req,res)=>{
+router.get('/', verify ,async (req,res)=>{
   try{
+    console.log(email)
     const time = await Timer.find(
       {created_at:'timer',email:email}
     )

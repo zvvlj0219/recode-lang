@@ -1,12 +1,16 @@
 const express = require('express');
 const router = express.Router();
 
+//verify token function
+const verify = require('./verifyToken');
+
 //mongoose schema todoSchema and accountsSchema
 const Todo = require('../../../model/todoModel');
 const Timer = require('../../../model/timerModel');
 
-//tentative account email
-const email = 'sample1234@mouse.com';
+//logged in  account email
+const email = process.env.LOGGEDIN_EMAIL;
+
 
 //zeroday sixday
 let today = new Date();
@@ -22,8 +26,9 @@ zeroday.setSeconds(0);
 sixday.setDate(zeroday.getDate()+6);
 
 //get dashboard
-router.get('/',async (req,res)=>{
+router.get('/', verify, async (req,res)=>{
   try{
+    console.log(email)
     const timer = await Timer.find(
       {
         email:email,

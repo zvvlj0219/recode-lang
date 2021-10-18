@@ -10,6 +10,10 @@ const accountsSchema = new mongoose.Schema(
       type:String,
       required:true,
     },
+    username:{
+      type:String,
+      required:true,
+    },
     list:{
       type:Array,
       required:true,
