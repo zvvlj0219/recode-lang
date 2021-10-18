@@ -1,54 +1,13 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const router = express.Router();
+
+//mongoose schema todoSchema and accountsSchema
+const Todo = require('../../../model/todoModel');
+const Accounts = require('../../../model/accountsModel');
 
 //tentative account email
 const email = 'sample1234@mouse.com';
-
-// mongoose connect to mongoDB Atlas
-const uri = require('../../../config');
-
-const options = {
-	useUnifiedTopology : true,
-	useNewUrlParser : true,
-  useFindAndModify : false
-}
-mongoose.connect(uri,options);
-
-
-//mongoose schema todoSchema
-const todoSchema = new mongoose.Schema(
-  {
-    email:String,
-    language:String,
-    created_at:String,
-    text:String,
-    checked:Boolean,
-    study_time:Number,
-    isDone:Boolean,
-    timestamps:Object,
-  },
-  {
-    collection:'todo'
-  }
-);
-
-//mongoose schema accountSchema
-const accountsSchema = new mongoose.Schema(
-  {
-    email:String,
-    password:String,
-    list:Array
-  },
-  {
-    collection:'accounts'
-  }
-);
-
-//mongoose model
-const Todo = mongoose.model('Todo',todoSchema);
-const Accounts = mongoose.model('Accounts',accountsSchema);
-
+  
 //get todo
 router.get('/', async (req,res)=>{
   try{
