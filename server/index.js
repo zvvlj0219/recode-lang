@@ -1,7 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const bodyParser = require('body-parser');
 const cors = require('cors');
 const cookieParser = require("cookie-parser");
 const app = express();
@@ -10,6 +9,7 @@ const app = express();
 const dashboardRoute = require('./routes/api/v1/dashboard');
 const todoRoute = require('./routes/api/v1/todo');
 const timerRoute = require('./routes/api/v1/timer');
+const authRoute = require('./routes/api/v1/auth');
 
 //load .env
 dotenv.config();
@@ -28,7 +28,8 @@ mongoose.connect(
 );
 
 // middleware
-app.use(bodyParser.json());
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 app.use(cors());
 app.use(cookieParser());
 
@@ -36,6 +37,9 @@ app.use(cookieParser());
 app.use('/api/v1/dashboard',dashboardRoute);
 app.use('/api/v1/todo',todoRoute);
 app.use('/api/v1/timer',timerRoute);
+app.use('/api/v1/account',authRoute);
+app.use('/api/v1/account',authRoute);
+
 
 //handle production
 if(process.env.NODE_ENV === 'produnction'){

@@ -1,9 +1,13 @@
 <template>
   <div id="app">
     <Header/>
-    <div class="main">
-      <Aside/>
-      <Content/>
+    <router-view 
+      v-if="!authentication"
+      v-on:loginComplete="loginComplete"
+    ></router-view>
+    <div v-else class="main">
+      <Aside />
+      <Content />
     </div>
     <Footer/>
   </div>
@@ -22,6 +26,22 @@ export default {
     Aside,
     Content,
     Footer
+  },
+  data(){
+    return {
+      authentication:true,
+      //とりあえずデータで管理し後々はvuexで管理する
+    }
+  },
+  created(){
+    if(!this.authentication){
+      this.$router.push('/login');
+    }
+  },
+  methods:{
+    loginComplete(){
+      this.$router.push('/dashboard');
+    }
   }
 }
 </script>

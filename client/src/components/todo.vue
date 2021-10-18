@@ -73,7 +73,6 @@ import TypeScript from './languages/TypeScript.vue';
 export default {
   data(){
     return {
-      email:'sample1234@mouse.com',
       tabList:[],
       selectable_lang:[],
       modal_lang:null,
