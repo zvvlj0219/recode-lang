@@ -7,7 +7,10 @@ import login from './view/login';
 import register from './view/register';
 
 //load vue-router
-Vue.use(Router)
+Vue.use(Router);
+
+//import vuex store
+import store from './store/index';
 
 export default new Router({
   mode:'history',
@@ -15,27 +18,66 @@ export default new Router({
     {
       path:'/dashboard',
       name:'dashboard',
-      component:dashboard
+      component:dashboard,
+      beforeEnter(to,from,next){
+        if(store.getters.idToken){
+          next();//あればaboutを閲覧できる
+        }else {
+          next('/login'); // なければログインをやり直し
+        }
+      }
     },
     {
       path:'/timer',
       name:'timer',
-      component:timer
+      component:timer,
+      beforeEnter(to,from,next){
+        if(store.getters.idToken){
+          next();//あればaboutを閲覧できる
+        }else {
+          next('/login'); // なければログインをやり直し
+        }
+      }
     },
     {
       path:'/todo',
       name:'todo',
       component:todo,
+      beforeEnter(to,from,next){
+        if(store.getters.idToken){
+          next();//あればaboutを閲覧できる
+        }else {
+          next('/login'); // なければログインをやり直し
+        }
+      }
     },
     {
       path:'/login',
       name:'login',
       component:login,
+      beforeEnter(to,from,next){
+        if(store.getters.idToken){
+          next('/dashboard'); //あればホームにもどれる
+        }else{
+          next() //idTokenがなければそのままloginにいる
+        }
+      }
     },
     {
       path:'/register',
       name:'register',
       component:register,
+      beforeEnter(to,from,next){
+        if(store.getters.idToken){
+          next('/dashboard'); //あればホームにもどれる
+        }else{
+          next() //idTokenがなければそのままloginにいる
+        }
+      }
+    },
+    {
+      path:'*',
+      redirect:'/dashboard'
     },
   ]
 })

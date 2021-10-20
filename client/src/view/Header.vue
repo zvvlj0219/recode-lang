@@ -2,7 +2,7 @@
   <div class="header">
     <div class="title">RECORD-LANG</div>
     <div class="acount-wrapper">
-      <div>sample1234@gamil</div>
+      <div>{{loggedinEmail}}</div>
       <div class="dropdown-list"></div>
     </div>
   </div>
@@ -10,7 +10,12 @@
 
 <script>
 export default {
-  name:'Header'
+  name:'Header',
+  computed:{
+    loggedinEmail(){
+      return this.$store.getters.email;
+    }
+  }
 }
 </script>
 

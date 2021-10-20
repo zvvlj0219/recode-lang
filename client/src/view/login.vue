@@ -49,10 +49,14 @@ export default {
     async submit_login(){
       try{
         const response = await authService.login(this.login_email,this.login_password);
+        const email = response.data.email;
+        const token = response.data.token;
+        this.$store.dispatch('updateEmail',email);
+        this.$store.dispatch('updateIdToken',token);
+        this.$router.push('/dashboard');
         this.login_email = '';
         this.login_password = '';
-        console.log(response);
-        this.$emit('loginComplete')
+        console.log(response.data.email);
       }catch(e){
         console.log(e)
       }
