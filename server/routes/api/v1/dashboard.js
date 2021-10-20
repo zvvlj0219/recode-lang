@@ -8,10 +8,6 @@ const verify = require('./verifyToken');
 const Todo = require('../../../model/todoModel');
 const Timer = require('../../../model/timerModel');
 
-//logged in  account email
-const email = process.env.LOGGEDIN_EMAIL;
-
-
 //zeroday sixday
 let today = new Date();
 let day = today.getDay();
