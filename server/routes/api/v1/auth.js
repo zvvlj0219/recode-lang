@@ -53,7 +53,7 @@ router.post('/login', async (req,res)=>{
   //checking if the email exists
   const account = await Accounts.findOne({email:req.body.email});
   if(!account){
-    return res.send(400).send('Email is not found');
+    return res.status(400).send('Email is not found');
   }
   
   //password is correct
@@ -69,21 +69,23 @@ router.post('/login', async (req,res)=>{
     { algorithm: 'HS256',expiresIn: '2h' }
   );
   
-  //login user email
-  process.env.LOGGEDIN_EMAIL = account.email
-  console.log(process.env.LOGGEDIN_EMAIL)
+  //data token and email
+  const data = {
+    token:token,
+    email:account.email
+  }
 
   //set token on cookie
   res.cookie(
-    "access_token", 
-    token,
+    "access_data", 
+    data,
     {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
     }
     )
     .status(200)
-    .json({ message: "Logged in successfully" });
+    .json(data);
   });
   
 module.exports = router;

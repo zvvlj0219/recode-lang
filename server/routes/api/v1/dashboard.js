@@ -28,7 +28,8 @@ sixday.setDate(zeroday.getDate()+6);
 //get dashboard
 router.get('/', verify, async (req,res)=>{
   try{
-    console.log(email)
+    console.log(req.cookies.access_data.email)
+    const email = req.cookies.access_data.email;
     const timer = await Timer.find(
       {
         email:email,
