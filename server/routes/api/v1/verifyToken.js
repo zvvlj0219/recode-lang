@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 module.exports = function(req,res,next){
   //cookie 
-  const token = req.cookies.access_token;
+  const token = req.cookies.access_data.token;
   if(!token){
     return res.status(401).send('Access Denied');
   }

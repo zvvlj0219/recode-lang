@@ -7,13 +7,11 @@ const verify = require('./verifyToken');
 //mongoose schema
 const Timer = require('../../../model/timerModel');
 
-//logged in  account email
-const email = process.env.LOGGEDIN_EMAIL;
-
 //get time
 router.get('/', verify ,async (req,res)=>{
   try{
-    console.log(email)
+    console.log(req.cookies.access_data.email)
+    const email = req.cookies.access_data.email;
     const time = await Timer.find(
       {created_at:'timer',email:email}
     )
@@ -29,6 +27,7 @@ router.get('/', verify ,async (req,res)=>{
 //add time
 router.post('/',async (req,res)=>{
   try{
+    const email = req.cookies.access_data.email;
     const data = {
       email:email,
       language:req.body.language,

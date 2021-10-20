@@ -8,10 +8,6 @@ const verify = require('./verifyToken');
 const Todo = require('../../../model/todoModel');
 const Timer = require('../../../model/timerModel');
 
-//logged in  account email
-const email = process.env.LOGGEDIN_EMAIL;
-
-
 //zeroday sixday
 let today = new Date();
 let day = today.getDay();
@@ -28,7 +24,8 @@ sixday.setDate(zeroday.getDate()+6);
 //get dashboard
 router.get('/', verify, async (req,res)=>{
   try{
-    console.log(email)
+    console.log(req.cookies.access_data.email)
+    const email = req.cookies.access_data.email;
     const timer = await Timer.find(
       {
         email:email,

@@ -7,14 +7,12 @@ const verify = require('./verifyToken');
 //mongoose schema todoSchema and accountsSchema
 const Todo = require('../../../model/todoModel');
 const Accounts = require('../../../model/accountsModel');
-
-//logged in  account email
-// const email = process.env.LOGGEDIN_EMAIL;
   
 //get todo
 router.get('/', verify , async (req,res)=>{
   try{
-    console.log(process.env.LOGGEDIN_EMAIL)
+    console.log(req.cookies.access_data.email)
+    const email = req.cookies.access_data.email;
     const list = await Accounts.find(
       {
         email:email
@@ -45,6 +43,7 @@ router.get('/', verify , async (req,res)=>{
 //add todo
 router.post('/',async (req,res)=>{
   try{
+    const email = req.cookies.access_data.email;
     const data = {
       email:email,
       language:req.body.language,
@@ -84,6 +83,7 @@ router.put('/checked',async (req,res)=>{
 //update tab lang
 router.put('/list',async (req,res)=>{
   try{
+    const email = req.cookies.access_data.email;
     const list = req.body.list;
     const data = await Accounts.findOneAndUpdate(
       {
