@@ -228,7 +228,7 @@ export default {
 
 <style scoped>
 .router-content {
-  border-radius:2%;
+  margin:0;
 }
 
 .clock-wrapper {
@@ -256,7 +256,7 @@ export default {
   width:300px;
   height:300px;
   border-radius:50%;
-  background-color:lightyellow;
+  background-color:#495057;
   z-index: 3;
   display:flex;
   justify-content:center;
@@ -285,6 +285,7 @@ export default {
 .timer {
   background-color:rgba(211,211,211,0.5);
   border-radius:2%;
+  height:100%;
 }
 
 .timerComponent_container {
@@ -307,7 +308,6 @@ export default {
   .router-content {
     height:100%;
     width:100%;
-    margin:15px 10px;
   }
 
   .timer {
@@ -327,11 +327,10 @@ export default {
   }
 
   .recode-wrapper {
-    margin-top:10px;
+    margin:20px auto;
     height:250px;
     width:95%;
     box-shadow:  3px 3px 3px 0 rgba(146, 146, 146, 0.5);
-  
   }
 }
 

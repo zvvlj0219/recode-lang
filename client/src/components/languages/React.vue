@@ -4,7 +4,7 @@
     >
       <input type="button" 
       class="all_delete_botton"
-      value="all delete"
+      value="削除"
       v-on:click="all_delete()"
       >
     </div>
@@ -63,10 +63,10 @@
 import todoService from '../../modules/todoService.js'
 
 export default {
-  name:'react.js',
+  name:'React.js',
   data(){
     return{
-      lang:'react.js',
+      lang:'React.js',
       msg:'',
       taskMessage:false,
       todos:[],

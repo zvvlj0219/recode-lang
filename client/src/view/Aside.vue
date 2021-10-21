@@ -2,7 +2,6 @@
   <div class="aside-menu">
     <div class="menu-list">
       <router-link 
-      tag="div"
       class="page-link"
       v-for="item in aside"
       v-bind:key="item.name"
@@ -30,15 +29,17 @@ export default {
 <style scoped>
 /* side bar */
 .aside-menu{
-  background-color:#d8f3dc;
-  height: 100vh;
+  background-color:#343a40;
   position: -webkit-sticky;
   position: sticky;
   top: 0;
 }
 
-.menu-list > .page-link{
+.page-link{
   margin:15px 40px;
+  display:block;
+  color:lightcyan;
+  text-decoration:none;
 }
 
 /* Extra Small device (desktop, less than 576px) */
