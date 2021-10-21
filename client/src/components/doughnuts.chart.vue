@@ -17,8 +17,6 @@ export default {
   },
   methods:{
     render(){
-      console.log('today records')
-      console.log(this.today)
       const labels = this.today.map(el=>{
         return el.language;
       })
@@ -50,7 +48,7 @@ export default {
         responsive: false,
         cutoutPercentage: 70,
         legend: {
-          position: 'bottom'
+          position: 'bottom',
         },
         title: {
           display: true,
@@ -60,8 +58,13 @@ export default {
         },
       };
       this.renderChart(data,options)
-
     }
   }
 }
 </script>
+
+<style scoped>
+#doughnut-chart {
+  margin:0 auto;
+}
+</style>

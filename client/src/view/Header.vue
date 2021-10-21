@@ -22,10 +22,9 @@ export default {
 <style scoped>
 /* header */
 .header{
-  background-color:#38b000;
-  color:lightcyan;
+  background-color:#495057;
   height: 45px;
-  width:100%;
+  color:lightcyan;
   display: flex;
   justify-content: space-between;
   z-index:10;
@@ -43,6 +42,7 @@ export default {
   margin-left: 10px;
   margin-top: 0;
   display: flex;
+  color:rgba(224,255,255,.6)
 }
 
 .dropdown-list{

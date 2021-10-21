@@ -47,12 +47,12 @@ height: 1300px;
 #close {
   cursor: pointer;
   width: 200px;
-  border: 1px solid #ccc;
+  border: none;
   border-radius: 4px;
   text-align: center;
   padding: 12px;
   margin: 16px auto 0;
-  background: #4caf50;
+  background: #ffb600;
   color: white;
   position: relative;
   top: 30%;

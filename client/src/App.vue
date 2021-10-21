@@ -2,7 +2,7 @@
   <div id="app">
     <Header/>
     <div class="main">
-      <Aside />
+      <Aside/>
       <Content/>
     </div>
     <Footer/>
@@ -21,7 +21,7 @@ export default {
     Header,
     Aside,
     Content,
-    Footer
+    Footer,
   },
 }
 </script>
@@ -29,15 +29,19 @@ export default {
 <style>
 body{
   margin:0;
-}
-
-#id {
-  width:100%;
+  max-height:100vh;
 }
 /* main */
 .main{
   display: flex;
 }
+
+/*
+@media (max-width:576px){
+  body{
+    max-height:calc(100vh - 45px);
+  }
+}*/
 </style>
 
 

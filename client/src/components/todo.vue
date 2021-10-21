@@ -18,24 +18,22 @@
         </template>
         <template v-slot:modal>
           <div class="modal-content">
-            <div class="modal-body">
-              <select 
-                class="select"
+            <div
+              v-for="lang in selectable_lang"
+              v-bind:key="lang.language"
+            >
+              <input 
+                type="radio" 
+                v-bind:id="lang.language" 
+                v-bind:value="lang.language"
                 v-model="modal_lang"
               >
-                <option 
-                v-for="lang in selectable_lang"
-                v-bind:key="lang.language"
-                >{{lang.language}}</option>
-              </select>
-            </div>            
-            <input 
-            type="button" 
-            value="close"
-            >
+              <label v-bind:for="lang.language">{{lang.language}}</label>
+            </div>
             <input 
             type="button" 
             value="追加する"
+            class="lang-add-modal"
             v-on:click="langAdd()"
             >
           </div>
@@ -77,7 +75,7 @@ export default {
       selectable_lang:[],
       modal_lang:null,
       currentComponent:null,
-      todos:[]
+      todos:[],
     }
   },
   components:{
@@ -181,7 +179,7 @@ export default {
 }
 
 .tabbar-wrapper{
-  background-color: #ccff33;
+  background-color:rgba(73,80,87,0.3);
   display: flex;
   margin-bottom: 0;
   width:100vw;
@@ -195,7 +193,7 @@ export default {
 }
 
 .linkActive{
-  border-bottom:5px solid #38b000;
+  border-bottom:5px solid #ff6d00;
 }
 
 .lang-add{
@@ -205,8 +203,18 @@ export default {
   width:30px;
   height: 30px;
   font-size: 30px;
-  color:#004b23;
+  color:#ff9e00;
   cursor:pointer;
+}
+
+.lang-add-modal {
+  width:150px;
+  height:35px;
+  margin:20px auto;
+  border:none;
+  border-radius:5px;
+  background-color:#3a86ff;
+  display:block;
 }
 
 .modal {
@@ -225,7 +233,7 @@ export default {
 .modal-content{
   background-color: white;
   width: 80%;
-  margin: 40% auto;
+  margin: 0 auto;
 }
 
 @media (min-width:576px) {

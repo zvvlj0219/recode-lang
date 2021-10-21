@@ -21,6 +21,8 @@ zeroday.setMinutes(0);
 zeroday.setSeconds(0);
 sixday.setDate(zeroday.getDate()+6);
 
+console.log(zeroday)
+
 //get dashboard
 router.get('/', verify, async (req,res)=>{
   try{

@@ -4,7 +4,7 @@
     >
       <input type="button" 
       class="all_delete_botton"
-      value="all delete"
+      value="削除"
       v-on:click="all_delete()"
       >
     </div>
