@@ -34,6 +34,7 @@ body{
 /* main */
 .main{
   display: flex;
+  height:100%;
 }
 
 /*

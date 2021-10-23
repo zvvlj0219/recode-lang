@@ -21,7 +21,7 @@ export default new Vuex.Store({
     updateIdToken(state,idToken){
       state.idToken = idToken;
       console.log(idToken)
-    }
+    },
   },
   actions:{
     updateEmail({commit},email){
@@ -33,5 +33,5 @@ export default new Vuex.Store({
       console.log(idToken)
     },
   },
-  plugins: [createPersistedState({storage: window.sessionStorage})]
+  plugins: [createPersistedState()]
 })

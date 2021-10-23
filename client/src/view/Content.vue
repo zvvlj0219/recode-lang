@@ -19,6 +19,4 @@ export default {
   height:100%;
   color:lightcyan;
 }
-
-
 </style>

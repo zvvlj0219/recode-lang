@@ -42,13 +42,13 @@ export default {
       //label
       const data = {
         labels:[
-          `${labels[0]}Mon`,
-          `${labels[1]}Tue`,
-          `${labels[2]}Wed`,
-          `${labels[3]}Thu`,
-          `${labels[4]}Fri`,
-          `${labels[5]}Sat`,
-          `${labels[6]}Sun`
+          `${labels[0]}Sun`,
+          `${labels[1]}Mon`,
+          `${labels[2]}Tue`,
+          `${labels[3]}Wed`,
+          `${labels[4]}Thu`,
+          `${labels[5]}Fri`,
+          `${labels[6]}Sat`
         ],
         datasets: [
           {

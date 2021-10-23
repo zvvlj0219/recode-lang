@@ -1,6 +1,7 @@
 <template>
   <div class="header">
     <div class="title">RECORD-LANG</div>
+    <div class="logout" v-on:click="logout">ログアウト</div>
     <div class="acount-wrapper">
       <div>{{loggedinEmail}}</div>
       <div class="dropdown-list"></div>
@@ -14,6 +15,17 @@ export default {
   computed:{
     loggedinEmail(){
       return this.$store.getters.email;
+    }
+  },
+  methods:{
+    logout(){
+      if(this.$store.getters.idToken){
+        this.$store.dispatch('updateEmail',null);
+        this.$store.dispatch('updateIdToken',null);
+        this.$router.push('/login')
+      }else{
+        return;
+      }
     }
   }
 }
@@ -35,6 +47,11 @@ export default {
   line-height: 45px;
   margin-left: 15px;
   margin-top: 0;
+}
+
+.logout{
+  align-self:center;
+  margin-right:150px;
 }
 
 .acount-wrapper{
