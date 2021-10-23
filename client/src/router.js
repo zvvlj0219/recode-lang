@@ -10,7 +10,7 @@ import register from './view/register';
 Vue.use(Router);
 
 //import vuex store
-// import store from './store/index';
+import store from './store/index';
 
 export default new Router({
   mode:'history',
@@ -19,16 +19,40 @@ export default new Router({
       path:'/dashboard',
       name:'dashboard',
       component:dashboard,
+      beforeEnter(from,to,next){
+        if(store.getters.idToken){
+          next()
+        }else{
+          alert('access denied');
+          next('/login');
+        }
+      }
     },
     {
       path:'/timer',
       name:'timer',
       component:timer,
+      beforeEnter(from,to,next){
+        if(store.getters.idToken){
+          next()
+        }else{
+          alert('access denied');
+          next('/login');
+        }
+      }
     },
     {
       path:'/todo',
       name:'todo',
       component:todo,
+      beforeEnter(from,to,next){
+        if(store.getters.idToken){
+          next()
+        }else{
+          alert('access denied');
+          next('/login');
+        }
+      }
     },
     {
       path:'/login',
@@ -42,7 +66,7 @@ export default new Router({
     },
     {
       path:'*',
-      redirect:'/dashboard'
+      redirect:'/login'
     },
   ]
 })

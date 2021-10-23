@@ -228,7 +228,7 @@ export default {
 
 <style scoped>
 .router-content {
-  margin:0;
+  background-color:black;
 }
 
 .clock-wrapper {
@@ -284,18 +284,12 @@ export default {
 
 .timer {
   background-color:rgba(211,211,211,0.5);
-  border-radius:2%;
-  height:100%;
-}
-
-.timerComponent_container {
-  background-color:lightgrey;
-  border-radius:4%;
 }
 
 .button-wrapper {
   width:200px;
   margin:0 auto;
+  background-color:blue;
 }
 
 .recode-wrapper {
@@ -305,16 +299,9 @@ export default {
 
 
 @media (max-width:576px) {
-  .router-content {
-    height:100%;
-    width:100%;
-  }
-
   .timer {
     height:450px;
     width:95%;
-    box-shadow:  3px 3px 3px 0 rgba(146, 146, 146, 0.5);
-
   }
 
   .timerComponent_container {
@@ -330,7 +317,7 @@ export default {
     margin:20px auto;
     height:250px;
     width:95%;
-    box-shadow:  3px 3px 3px 0 rgba(146, 146, 146, 0.5);
+    margin-bottom:100px;
   }
 }
 
@@ -344,8 +331,6 @@ export default {
   .timer {
     height:480px;
     width:95%;
-    box-shadow:  3px 3px 3px 0 rgba(146, 146, 146, 0.5);
- 
   }
 
   .timerComponent_container {
@@ -361,8 +346,6 @@ export default {
     margin-top:10px;
     height:250px;
     width:95%;
-    box-shadow:  3px 3px 3px 0 rgba(146, 146, 146, 0.5);
-  
   }
 
 }
@@ -377,8 +360,6 @@ export default {
   .timer {
     height:480px;
     width:97%;
-    box-shadow:  3px 3px 3px 0 rgba(146, 146, 146, 0.5);
-  
   }
 
   .timerComponent_container {
@@ -394,7 +375,6 @@ export default {
     margin-top:10px;
     height:300px;
     width:97%;
-    box-shadow:  3px 3px 3px 0 rgba(146, 146, 146, 0.5);
   }
 
 
@@ -410,7 +390,6 @@ export default {
     grid-template-columns: repeat(3, 31%);
     grid-template-rows: repeat(6,110px);
     gap:10px 20px;
-    box-shadow:  3px 3px 3px 0 rgba(146, 146, 146, 0.5);
   }
 
   .timer {
@@ -436,8 +415,6 @@ export default {
     grid-template-columns: repeat(3, 31%);
     grid-template-rows: repeat(6,110px);
     gap:10px 20px;
-    box-shadow:  3px 3px 3px 0 rgba(146, 146, 146, 0.5);
-
   }
 
   .timer {
@@ -461,8 +438,6 @@ export default {
     grid-template-columns: repeat(3, 31%);
     grid-template-rows: repeat(6,110px);
     gap:10px 20px;
-    box-shadow:  3px 3px 3px 0 rgba(146, 146, 146, 0.5);
-  
   }
 
 
@@ -476,6 +451,4 @@ export default {
     grid-row: 1/4;
   }
 }
-
-
 </style>

@@ -83,9 +83,15 @@ router.post('/login', async (req,res)=>{
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
     }
-    )
-    .status(200)
-    .json(data);
-  });
-  
+  )
+  .status(200)
+  .json(data);
+});
+
+router.get('/logout', async (req,res)=>{
+  console.log('get logout')
+  res.clearCookie("access_data").send({mesage:'successfully logged out'})
+});
+
+
 module.exports = router;

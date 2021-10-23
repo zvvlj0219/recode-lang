@@ -70,7 +70,11 @@ export default {
       //aggregate records
       this.weekly_records =  dashboardService.aggregate_weekly(this.all_records);
       this.today_records =  dashboardService.aggregate_today(this.all_records);
+      console.log('today')
       console.log(this.today_records)
+      if(!this.today_records[0]){
+        this.show_msg = true;
+      }
     }catch(e){
       console.log(e)
     }

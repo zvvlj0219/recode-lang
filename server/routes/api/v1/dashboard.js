@@ -8,23 +8,21 @@ const verify = require('./verifyToken');
 const Todo = require('../../../model/todoModel');
 const Timer = require('../../../model/timerModel');
 
-//zeroday sixday
-let today = new Date();
-let day = today.getDay();
-let zeroday = new Date();
-let sixday = new Date();
-zeroday.setFullYear(today.getFullYear());
-zeroday.setMonth(today.getMonth());
-zeroday.setDate(today.getDate()-day);
-zeroday.setHours(0);
-zeroday.setMinutes(0);
-zeroday.setSeconds(0);
-sixday.setDate(zeroday.getDate()+6);
-
-console.log(zeroday)
-
 //get dashboard
 router.get('/', verify, async (req,res)=>{
+  //zeroday & sixday
+  let today = new Date();
+  let day = today.getDay();
+  let zeroday = new Date();
+  let sixday = new Date();
+  zeroday.setFullYear(today.getFullYear());
+  zeroday.setMonth(today.getMonth());
+  zeroday.setDate(today.getDate()-day);
+  zeroday.setHours(0);
+  zeroday.setMinutes(0);
+  zeroday.setSeconds(0);
+  sixday.setDate(zeroday.getDate()+6);
+
   try{
     console.log(req.cookies.access_data.email)
     const email = req.cookies.access_data.email;
@@ -36,8 +34,9 @@ router.get('/', verify, async (req,res)=>{
           $lte:sixday
         }
       }
-    )
-    .select(['language','study_time','timestamps']);
+    ).select(['language','study_time','timestamps']);
+      
+    console.log(zeroday);
 
     const todo = await Todo.find(
       {
@@ -48,8 +47,7 @@ router.get('/', verify, async (req,res)=>{
         },
         isDone:true
       }
-    )
-    .select(['language','study_time','timestamps']);
+    ).select(['language','study_time','timestamps']);
 
     console.log(timer)
     console.log(todo)
