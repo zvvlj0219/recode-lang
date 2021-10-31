@@ -1,0 +1,34 @@
+/* import google font */
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap');
+
+/* custom colors */
+:root {
+  --dark1-color:#212529;
+  --dark2-color:#343a40;
+  --dark3-color:rgba(73,80,87,0.3);
+  --dark4-color:#495057;
+}
+
+/* initialized css */
+* {
+  /* box-sizing:border-box; */
+  padding:0;
+  margin: 0;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  overflow:visible;
+}
+
+ul {
+  list-style-type: none;
+}
+
+a {
+  display: block;
+  text-decoration: none;
+}
+
+
+

@@ -2,10 +2,8 @@
   <div class="header">
     <div class="title">RECORD-LANG</div>
     <div class="logout" v-on:click="logout">ログアウト</div>
-    <div class="acount-wrapper">
-      <div>{{loggedinEmail}}</div>
-      <div class="dropdown-list"></div>
-    </div>
+    <div class="email">{{loggedinEmail}}</div>
+    <div class="dropdown-list"></div>
   </div>
 </template>
 
@@ -44,7 +42,6 @@ export default {
 
 .title{
   align-self: flex-start;
-  line-height: 45px;
   margin-left: 15px;
   margin-top: 0;
 }
@@ -54,15 +51,16 @@ export default {
   margin-right:150px;
 }
 
-.acount-wrapper{
+.email{
   align-self: center;
-  margin-left: 10px;
+  margin-left: 50px;
   margin-top: 0;
-  display: flex;
-  color:rgba(224,255,255,.6)
 }
 
 .dropdown-list{
+  align-self: center;
+  margin-left: 50px;
+  margin-top: 0;
   width: 0px;
   height: 0px;
   align-self: center;

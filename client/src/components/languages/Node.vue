@@ -182,5 +182,5 @@ export default {
 </script>
 
 <style scoped>
-  @import '../../modules/common.lang.css';
+  @import '../../css/common.lang.css';
 </style>

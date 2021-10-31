@@ -83,7 +83,7 @@ export default {
       };
 
       const options = {
-        responsive: false,
+        responsive: true,
         legend: {
           display:false
         },

@@ -45,7 +45,7 @@ export default {
       };
 
       const options = {
-        responsive: false,
+        responsive: true,
         cutoutPercentage: 70,
         legend: {
           position: 'bottom',

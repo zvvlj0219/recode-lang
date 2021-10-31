@@ -27,23 +27,6 @@ export default {
 </script>
 
 <style >
-body {
-font-size: 16px;
-height: 1300px;
-}
-/*
-#open {
-  cursor: pointer;
-  width: 200px;
-  border-radius: 4px;
-  text-align: center;
-  padding: 12px;
-  margin: 16px auto 0;
-  color: black;
-  position: relative;
-  top: 30%;
-}
-*/
 #close {
   cursor: pointer;
   width: 200px;
