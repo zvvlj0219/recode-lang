@@ -1,11 +1,12 @@
 <template>
   <div id="app">
     <Header/>
-    <div class="main">
+    <div class="flex">
       <Aside/>
-      <Content/>
+      <Content class="content"/>
     </div>
-    <Footer/>
+    <!--<div style="background:red;height:100vh;">p</div>-->
+    <Footer class="footer"/>
   </div>
 </template>
 
@@ -27,22 +28,8 @@ export default {
 </script>
 
 <style>
-body{
-  margin:0;
-  max-height:100vh;
-}
-/* main */
-.main{
-  display: flex;
-  height:100%;
-}
-
-/*
-@media (max-width:576px){
-  body{
-    max-height:calc(100vh - 45px);
-  }
-}*/
+@import 'css/classname.css';
+@import 'css/style.css';
 </style>
 
 
