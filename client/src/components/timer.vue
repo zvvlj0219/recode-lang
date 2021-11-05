@@ -1,7 +1,7 @@
 <template>
-  <div class="router-content">
-    <div class="timer" >
-      <div class="clock-wrapper">
+  <section class="timer">
+    <div class="container grid" >
+      <div class="clock">
         <div class="outer-circle"></div>
         <div class="inner-circle">
           <div class="circle-content">
@@ -47,76 +47,78 @@
           <div class="dummy-circle"></div>
         </transition>
       </div>
-    </div>
-    <ModalComponent>
-      <template v-slot:title>
-        <div class='timer_text'>
-          <div v-show="!clockEvent" class="setted_time">
-            <div v-if="setted_hour !== '00'">
-              {{setted_hour}}:{{setted_minute}}:00
+      <div class="time-management">
+        <ModalComponent>
+          <template v-slot:title>
+            <div class='timer_text'>
+              <div v-show="!clockEvent" class="setted_time">
+                <div v-if="setted_hour !== '00'">
+                  {{setted_hour}}:{{setted_minute}}:00
+                </div>
+                <div v-else>
+                  {{setted_minute}}:00
+                </div>
+              </div>
+              <div v-show="clockEvent" class="time_left">{{time_left}}</div>
             </div>
-            <div v-else>
-              {{setted_minute}}:00
+          </template>
+          <template v-slot:modal>
+            <div>アラーム: 
+              <select 
+                class ='select_hour'
+                v-model="setted_hour"
+              >
+                <option 
+                  v-for="i in 21"
+                  v-bind:key="i"
+                >
+                {{i-1 | adjustDigit}}
+                </option>
+              </select>
+              <span>時間</span>
+              <select 
+                class ='select_minute'
+                v-model="setted_minute"
+              >
+                <option 
+                  v-for="n in 60"
+                  v-bind:key="n"
+                >
+                {{n-1 | adjustDigit}}
+                </option>
+              </select>
+              <span>分</span>
             </div>
-          </div>
-          <div v-show="clockEvent" class="time_left">{{time_left}}</div>
+          </template>
+        </ModalComponent>
+        <div class="button-wrapper">
+          <div 
+            class="btn start_btn"
+            v-show="!clockEvent"
+            v-on:click="startTimer();clockEvent = true;"
+          >start</div>
+          <div 
+            class="btn cancel_btn"
+            v-show="clockEvent"
+            v-on:click="cancelTimer();clockEvent = false;"
+          >cancel</div>
         </div>
-      </template>
-      <template v-slot:modal>
-        <div>アラーム: 
-          <select 
-            class ='select_hour'
-            v-model="setted_hour"
+      </div>
+      <div class="record-wrapper">
+        <p>過去の記録</p>
+        <ul>
+          <li 
+            v-for="record in past_record"
+            v-bind:key="record._id"
           >
-            <option 
-              v-for="i in 21"
-              v-bind:key="i"
-            >
-            {{i-1 | adjustDigit}}
-            </option>
-          </select>
-          <span>時間</span>
-          <select 
-            class ='select_minute'
-            v-model="setted_minute"
-          >
-            <option 
-              v-for="n in 60"
-              v-bind:key="n"
-            >
-            {{n-1 | adjustDigit}}
-            </option>
-          </select>
-          <span>分</span>
-        </div>
-      </template>
-    </ModalComponent>
-    <div class="button-wrapper">
-      <div 
-        class="btn start_btn"
-        v-show="!clockEvent"
-        v-on:click="startTimer();clockEvent = true;"
-      >start</div>
-      <div 
-        class="btn cancel_btn"
-        v-show="clockEvent"
-        v-on:click="cancelTimer();clockEvent = false;"
-      >cancel</div>
+            {{record.language}}:
+            {{Math.floor(record.study_time)}}時間{{record.study_time*60}}分:
+            {{new Date(record.timestamps).getMonth()+1}}月{{new Date(record.timestamps).getDate()}}日
+          </li>
+        </ul>
+      </div>
     </div>
-    <div class="recode-wrapper">
-      <p>過去の記録</p>
-      <ul>
-        <li 
-          v-for="record in past_record"
-          v-bind:key="record._id"
-        >
-          {{record.language}}:
-          {{Math.floor(record.study_time)}}時間{{record.study_time*60}}分:
-          {{new Date(record.timestamps).getMonth()+1}}月{{new Date(record.timestamps).getDate()}}日
-        </li>
-      </ul>
-    </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -227,34 +229,40 @@ export default {
 </script>
 
 <style scoped>
-.router-content {
-  background-color:black;
+/*pc*/
+.timer .grid{
+  grid-template-columns: repeat(2,1fr);
+  grid-template-rows: repeat(4,1fr);
+  height:100vh;
 }
 
-.clock-wrapper {
-  margin:0 auto;
-  width:90%;
-  height:90%;
+/*clock style*/
+.clock{
+  width:600px;
+  height:600px;
+  grid-column: 1;
+  grid-row: 1 / 5;
   position:relative;
-  background-color:skyblue;
+  justify-self:center;
+  align-self:flex-start;
 }
 
 .outer-circle {
   position:absolute;
-  top:50px;
-  left:35px;
-  width:350px;
-  height:350px;
+  top:75px;
+  left:75px;
+  width:450px;
+  height:450px;
   border-radius:50%;
   background-color:lightgreen;
   z-index: 1;
 }
 .inner-circle {
   position:absolute;
-  top:75px;
-  left:60px;
-  width:300px;
-  height:300px;
+  top:100px;
+  left:100px;
+  width:400px;
+  height:400px;
   border-radius:50%;
   background-color:#495057;
   z-index: 3;
@@ -264,191 +272,208 @@ export default {
 }
 .dummy-circle {
   position:absolute;
-  top:75px;
-  left:60px;
-  width:300px;
-  height:300px;
+  top:100px;
+  left:100px;
+  width:400px;
+  height:400px;
   border-radius:50%;
   background-color:lightyellow;
   z-index: 2;
 }
 
 .circle-content {
-  width:200px;
+  width:280px;
+  height:280px;
+}
+
+.time-management{
+  background:lightgreen;
+  grid-column: 2;
+  grid-row: 1 / 3;
+  width:450px;
   height:200px;
 }
 
-.radio-wrapper {
-  list-style:none;
+.record-wrapper{
+  background:lightpink;
+  grid-column: 2;
+  grid-row: 3 / 5;
+  width:450px;
+  height:200px;
+  align-self:flex-start;
 }
 
-.timer {
-  background-color:rgba(211,211,211,0.5);
-}
-
-.button-wrapper {
-  width:200px;
-  margin:0 auto;
-  background-color:blue;
-}
-
-.recode-wrapper {
-  background-color:rgba(144,238,144,0.5);
-  border-radius:4%;
-}
-
-
-@media (max-width:576px) {
-  .timer {
-    height:450px;
-    width:95%;
-  }
-
-  .timerComponent_container {
+@media (min-width:1100px) and (max-width:1300px){
+  .time-management{
+    background:lightgreen;
+    grid-column: 2;
+    grid-row: 1 / 3;
+    width:300px;
     height:200px;
-    width:95%;
   }
 
-  .timerComponent {
-    width:350px;
+  .record-wrapper{
+    background:lightpink;
+    grid-column: 2;
+    grid-row: 3 / 5;
+    width:300px;
+    height:200px;
+    align-self:flex-start;
   }
 
-  .recode-wrapper {
-    margin:20px auto;
-    height:250px;
-    width:95%;
-    margin-bottom:100px;
-  }
 }
 
-@media (min-width:576px) and (max-width:767px) {
-  .router-content {
+/*tablet large 1150*/
+@media (max-width:1200px){
+  .timer .grid{
+    grid-template-columns: repeat(1,1fr);
+    grid-template-rows: 500px 250px 250px;  
+    gap:10px;
     height:100%;
-    width:100%;
-    margin:15px 10px;
   }
 
-  .timer {
-    height:480px;
-    width:95%;
+  .clock{
+    grid-column:1;
+    grid-row: 1;
+    width:500px;
+    height:500px;
+    justify-self: center;
   }
 
-  .timerComponent_container {
-    height:200px;
-    width:95%;
-  }
-
-  .timerComponent {
-    width:310px;
-  }
-
-  .recode-wrapper {
-    margin-top:10px;
-    height:250px;
-    width:95%;
-  }
-
-}
-
-@media (min-width:768px) and (max-width:992px) {
-  .router-content {
-    height:100%;
-    width:100%;
-    margin:15px 10px;
-  }
-
-  .timer {
-    height:480px;
-    width:97%;
-  }
-
-  .timerComponent_container {
-    height:200px;
-    width:97%;
-  }
-
-  .timerComponent {
+  .outer-circle{
     width:400px;
+    height:400px;
+    top:50px;
+    left:50px;
+  }
+  .inner-circle{
+    width:350px;
+    height:350px;
+    top:75px;
+    left:75px;
+  }
+  .dummy-circle{
+    width:350px;
+    height:350px;
+    top:75px;
+    left:75px;
+  }
+  .circle-content {
+    width:200px;
+    height:200px;
   }
 
-  .recode-wrapper {
-    margin-top:10px;
+
+  .time-management{
+    grid-column:1;
+    grid-row: 2;
+    justify-self: center;
+    align-self:flex-start;
+  }
+
+  .record-wrapper{
+    grid-column:1;
+    grid-row: 3;
+    justify-self: center;
+
+  }
+}
+
+/*tablet middle 750 && mobile large and middle*/
+@media  (max-width:750px){
+  .timer .grid{
+    grid-template-columns: repeat(1,1fr);
+    grid-template-rows: 400px 300px 400px;  
+    gap:20px;
+    height:100%;
+  }
+
+  .clock{
+    grid-column:1;
+    grid-row: 1;
+    width:300px;
     height:300px;
-    width:97%;
+    justify-self: center;
+    align-self:center;
   }
 
+  .outer-circle{
+    width:300px;
+    height:300px;
+    top:0;
+    left:0;
+  }
+  .inner-circle{
+    width:250px;
+    height:250px;
+    top:25px;
+    left:25px;
+  }
+  .dummy-circle{
+    width:250px;
+    height:250px;
+    top:25px;
+    left:25px;
+  }
+  .circle-content {
+    width:100px;
+    height:100px;
+  }
 
+  .time-management{
+    width:80%;
+  }
+  .record-wrapper{
+    width:80%;
+  }
 }
 
-@media (min-width:992px) and (max-width:1199px)  {
-  .router-content{
-    width:95%;
-    height:80%;
-    margin:20px auto;
-    padding: 10px;
-    display: grid;
-    grid-template-columns: repeat(3, 31%);
-    grid-template-rows: repeat(6,110px);
-    gap:10px 20px;
+/* mobile small*/
+@media (max-width:576px){
+  .timer .grid{
+    grid-template-columns: repeat(1,1fr);
+    grid-template-rows: 300px 200px 300px;  
+    gap:20px;
+    height:100%;
   }
 
-  .timer {
-    grid-column: 1/3;
-    grid-row: 1/6;
-  }
-  
-  .recode-wrapper {
-    grid-column: 3;
-    grid-row: 1/4;
-  }
-
-
-}
-
-@media (min-width:1200px) and (max-width:1399px)  {
-  .router-content{
-    width:95%;
-    height:80%;
-    margin:20px auto;
-    padding: 10px;
-    display: grid;
-    grid-template-columns: repeat(3, 31%);
-    grid-template-rows: repeat(6,110px);
-    gap:10px 20px;
+  .clock{
+    grid-column:1;
+    grid-row: 1;
+    width:250px;
+    height:250px;
+    justify-self: center;
+    align-self:center;
   }
 
-  .timer {
-    grid-column: 1/3;
-    grid-row: 1/6;
+  .outer-circle{
+    width:250px;
+    height:250px;
+    top:0;
+    left:0;
   }
-  
-  .recode-wrapper {
-    grid-column: 3;
-    grid-row: 1/4;
+  .inner-circle{
+    width:230px;
+    height:230px;
+    top:10px;
+    left:10px;
+  }
+  .dummy-circle{
+    width:230px;
+    height:230px;
+    top:10px;
+    left:10px;
+  }
+  .circle-content {
+    width:100px;
+    height:100px;
   }
 
-}
-@media (min-width:1300px) {
-  .router-content{
-    width:1000px;
-    height:80%;
-    margin:20px auto;
-    padding: 10px;
-    display: grid;
-    grid-template-columns: repeat(3, 31%);
-    grid-template-rows: repeat(6,110px);
-    gap:10px 20px;
+  .time-management{
+    width:80%;
   }
-
-
-  .timer {
-    grid-column: 1/3;
-    grid-row: 1/6;
-  }
-  
-  .recode-wrapper {
-    grid-column: 3;
-    grid-row: 1/4;
+  .record-wrapper{
+    width:80%;
   }
 }
 </style>
