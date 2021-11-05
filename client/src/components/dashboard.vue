@@ -122,7 +122,7 @@ export default {
 
 <style scoped>
 .dashboard {
-  min-height:950px;
+  min-height:1000px;
 }
 
 .table {
