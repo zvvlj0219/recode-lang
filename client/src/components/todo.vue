@@ -1,45 +1,46 @@
 <template>
-  <div class="todo">
-    <div class="tabbar-wrapper">
-      <div  
-        class="tab"
+  <section class="todo">
+    <nav>
+      <ul>
+        <li
         v-for="tab in tabList" 
         v-bind:key="tab.language"
         v-on:click="tabChange(tab.language)"
         v-bind:class="{linkActive: currentComponent == tab.language}"
-      >
+        >
         {{tab.language}}
-      </div>
-      <ModalComponent>
-        <template v-slot:title>
-        <div
-          class="lang-add"
-        >＋</div>
-        </template>
-        <template v-slot:modal>
-          <div class="modal-content">
-            <div
-              v-for="lang in selectable_lang"
-              v-bind:key="lang.language"
-            >
-              <input 
-                type="radio" 
-                v-bind:id="lang.language" 
-                v-bind:value="lang.language"
-                v-model="modal_lang"
+        </li>
+        <ModalComponent>
+          <template v-slot:title>
+          <div
+            class="lang-add"
+          >＋</div>
+          </template>
+          <template v-slot:modal>
+            <div class="modal-content">
+              <div
+                v-for="lang in selectable_lang"
+                v-bind:key="lang.language"
               >
-              <label v-bind:for="lang.language">{{lang.language}}</label>
+                <input 
+                  type="radio" 
+                  v-bind:id="lang.language" 
+                  v-bind:value="lang.language"
+                  v-model="modal_lang"
+                >
+                <label v-bind:for="lang.language">{{lang.language}}</label>
+              </div>
+              <input 
+              type="button" 
+              value="追加する"
+              class="lang-add-modal"
+              v-on:click="langAdd()"
+              >
             </div>
-            <input 
-            type="button" 
-            value="追加する"
-            class="lang-add-modal"
-            v-on:click="langAdd()"
-            >
-          </div>
-        </template>
-      </ModalComponent>
-    </div>
+          </template>
+        </ModalComponent>
+      </ul>
+    </nav>
     <keep-alive>
       <component 
         v-bind:is="currentComponent"
@@ -50,7 +51,7 @@
         v-bind:propsTodos="todos"
       ></component>
     </keep-alive>
-  </div>
+  </section>
 </template>
 
 
@@ -67,6 +68,9 @@ import React from './languages/React.vue';
 import Vue from './languages/Vue.vue';
 import JavaScript from './languages/JavaScript.vue';
 import TypeScript from './languages/TypeScript.vue';
+import Python from './languages/Python.vue';
+import Go from './languages/Go.vue';
+import Express from './languages/Express.vue';
 
 export default {
   data(){
@@ -85,6 +89,9 @@ export default {
     'Vue.js':Vue,
     JavaScript,
     TypeScript,
+    Python,
+    Go,
+    Express
   },
   async created(){
     await this.init();
@@ -178,30 +185,50 @@ export default {
   height: 100vh;
 }
 
-.tabbar-wrapper{
+.todo nav {
   background-color:rgba(73,80,87,0.3);
-  display: flex;
   margin-bottom: 0;
   width:100vw;
   height:50px;
+  overflow-x:scroll;
+  white-space:nowrap;
 }
 
-.tab {
-  margin-left:30px;
-  line-height:50px;
+@media (min-width:576px){
+  .todo nav{
+    max-width:calc(100vw - 217px);
+    overflow-x:scroll;
+    white-space:nowrap;
+  }
+}
+
+.todo nav::-webkit-scrollbar {
+  display: none;
+}
+
+.todo ul {
+  display:flex;
+  margin-left:20px;
+}
+
+.todo ul > li {
+  line-height:45px;
+  padding:0 7px;
+  text-align:center;
+  color:lightcyan;
   cursor:pointer;
 }
 
 .linkActive{
   border-bottom:5px solid #ff6d00;
+
 }
 
 .lang-add{
   align-self: center;
-  margin-left:10px;
+  margin:0 10px;
   margin-top:3px;
-  width:30px;
-  height: 30px;
+  height: 45px;
   font-size: 30px;
   color:#ff9e00;
   cursor:pointer;
@@ -217,48 +244,9 @@ export default {
   display:block;
 }
 
-.modal {
-  display:block;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 100%;
-  overflow: auto;
-  background-color: rgba(0,0,0,0.5);
-}
-
-
 .modal-content{
   background-color: white;
-  width: 80%;
+  width: 150px;
   margin: 0 auto;
 }
-
-@media (min-width:576px) {
-  .todo{
-    width:520px;
-  }
-}
-
-@media (min-width:768px){
-  .todo{
-    width:590px;
-  }
-}
-
-@media (min-width:992px) {
-  .todo{
-    width:760px;
-  }
-}
-
-/* modal style */
-#modalComponent{
-  height:100%;
-  width:100px;
-  margin-left:10px;
-}
-
 </style>

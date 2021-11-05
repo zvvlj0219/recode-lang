@@ -20,6 +20,10 @@
   border-radius: 7px;
 }
 
+.msg{
+  margin-top:20px;
+}
+
 .task-message{
   color:lightcoral;
 }
@@ -128,7 +132,7 @@
 }
 
 .submit-button-wrapper{
-  margin-left: 30px;
+  margin-left: 10px;
 }
 
 .submit-button-wrapper > div{

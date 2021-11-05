@@ -5,7 +5,6 @@
       <Aside/>
       <Content class="content"/>
     </div>
-    <!--<div style="background:red;height:100vh;">p</div>-->
     <Footer class="footer"/>
   </div>
 </template>
