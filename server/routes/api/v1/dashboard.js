@@ -49,11 +49,12 @@ router.get('/', verify, async (req,res)=>{
       }
     ).select(['language','study_time','timestamps']);
 
-    console.log(timer)
-    console.log(todo)
+    console.log(timer);
+    console.log(todo);
+
     res.send({
       timer:timer,
-      todo:todo
+      todo:todo,
     });
   }catch(e){
     res.status(500).send();

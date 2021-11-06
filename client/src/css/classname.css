@@ -26,6 +26,14 @@
   color:lightcyan;
 }
 
+.text-skyblue{
+  color:skyblue;
+}
+
+.text-lightcoral{
+  color:lightcoral;
+}
+
 /* grid */
 .grid {
   display: grid;
