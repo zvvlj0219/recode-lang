@@ -20,7 +20,8 @@ mongoose.connect(
   {
     useUnifiedTopology : true,
     useNewUrlParser : true,
-    useFindAndModify : false
+    useFindAndModify : false,
+    // timestamp: true
   },
   ()=>{
     console.log('connected to mongodb atlas')

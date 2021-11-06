@@ -20,7 +20,7 @@ const timerSchema = new mongoose.Schema(
     },
     timestamps:{
       type:Object,
-      required:true,
+      required:false,
     },
   },
   {

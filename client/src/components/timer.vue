@@ -1,6 +1,6 @@
 <template>
   <section class="timer">
-    <div class="container grid" >
+    <div class="container grid text-lightcyan" >
       <div class="clock">
         <div class="outer-circle"></div>
         <div class="inner-circle">
@@ -63,7 +63,7 @@
             </div>
           </template>
           <template v-slot:modal>
-            <div>アラーム: 
+            <div>設定時間: 
               <select 
                 class ='select_hour'
                 v-model="setted_hour"
@@ -105,14 +105,14 @@
         </div>
       </div>
       <div class="record-wrapper">
-        <p>過去の記録</p>
+        <p class="text-center">過去の記録</p>
         <ul>
           <li 
             v-for="record in past_record"
             v-bind:key="record._id"
           >
-            {{record.language}}:
-            {{Math.floor(record.study_time)}}時間{{record.study_time*60}}分:
+            {{record.language}}&nbsp;&nbsp;
+            {{Math.floor(record.study_time)}}時間{{record.study_time*60}}分&nbsp;&nbsp;
             {{new Date(record.timestamps).getMonth()+1}}月{{new Date(record.timestamps).getDate()}}日
           </li>
         </ul>
@@ -145,7 +145,7 @@ export default {
   },
   async created(){
     try{
-      this.past_record = await timerService.getTime();
+      this.init();
     }catch(e){
       console.log(e)
     }
@@ -173,6 +173,9 @@ export default {
         }
       },30)
     },
+    async init(){
+      this.past_record = await timerService.getTime();
+    },
     startTimer(){
       console.log(this.setted_hour,this.setted_minute);
       this.clockEvent = true;
@@ -194,6 +197,7 @@ export default {
         clearTimeout(this.timeoutId);
         this.addRecord();
         this.clockEvent = false;
+        this.init();
       }
       //経過時間
       let elapsed_time = Date.now() - startTime;
@@ -208,7 +212,7 @@ export default {
       if(h == '00'){
         this.time_left = `${m}:${s}`
       }else{
-      this.time_left = `${h}:${m}:${s}`;
+        this.time_left = `${h}:${m}:${s}`;
       }
     },
     cancelTimer(){
@@ -254,7 +258,7 @@ export default {
   width:450px;
   height:450px;
   border-radius:50%;
-  background-color:lightgreen;
+  background-color:skyblue;
   z-index: 1;
 }
 .inner-circle {
@@ -277,7 +281,7 @@ export default {
   width:400px;
   height:400px;
   border-radius:50%;
-  background-color:lightyellow;
+  background-color:#ff6d00;
   z-index: 2;
 }
 
@@ -286,26 +290,59 @@ export default {
   height:280px;
 }
 
+/*time manegement*/
 .time-management{
-  background:lightgreen;
   grid-column: 2;
   grid-row: 1 / 3;
   width:450px;
   height:200px;
 }
 
+
+.timer_text{
+  text-align:center;
+  height:130px;
+  font-size:7rem;
+}
+
+.btn{
+  width:250px;
+  height:60px;
+  text-align:center;
+  margin:0 auto;
+  font-size:3rem;
+  margin-top:20px;
+  border-radius:10px;
+  color:#333;
+}
+
+.start_btn{
+  background-color:skyblue;
+}
+.cancel_btn{
+  background-color:lightcoral;
+}
+
+/*record wrapper*/
 .record-wrapper{
-  background:lightpink;
   grid-column: 2;
   grid-row: 3 / 5;
   width:450px;
   height:200px;
   align-self:flex-start;
+  border:4px solid lightcyan;
+  border-radius:20px;
+  font-size:1.2rem;
 }
 
+.record-wrapper  li{
+  border-bottom:1px solid lightcyan;
+  margin:5px 20px;
+}
+
+/* media query pc*/
 @media (min-width:1100px) and (max-width:1300px){
   .time-management{
-    background:lightgreen;
     grid-column: 2;
     grid-row: 1 / 3;
     width:300px;
@@ -313,7 +350,6 @@ export default {
   }
 
   .record-wrapper{
-    background:lightpink;
     grid-column: 2;
     grid-row: 3 / 5;
     width:300px;
@@ -323,7 +359,7 @@ export default {
 
 }
 
-/*tablet large 1150*/
+/*tablet extra large 1150*/
 @media (max-width:1200px){
   .timer .grid{
     grid-template-columns: repeat(1,1fr);
@@ -375,7 +411,13 @@ export default {
     grid-column:1;
     grid-row: 3;
     justify-self: center;
+  }
+}
 
+/*tablet large*/
+@media (min-height:1000px){
+  .timer .grid{
+    height:100vh;
   }
 }
 
@@ -435,6 +477,7 @@ export default {
     grid-template-rows: 300px 200px 300px;  
     gap:20px;
     height:100%;
+    margin-bottom:55px;
   }
 
   .clock{
@@ -472,8 +515,45 @@ export default {
   .time-management{
     width:80%;
   }
+
+  .timer_text{
+    font-size:6rem;
+    height:100px;
+  }
+
+  .btn{
+    font-size:3rem;
+    width:200px;
+    height:60px;
+  }
+
   .record-wrapper{
     width:80%;
+    align-self:flex-start;
+    font-size:1rem;
   }
+}
+
+@media (max-width:350px){
+  .timer .grid{
+    margin-bottom:20px;
+  }
+
+  .timer_text{
+    font-size:5rem;
+    height:100px;
+  }
+
+  .btn{
+    font-size:2rem;
+    width:200px;
+    height:60px;
+  }
+
+  .record-wrapper{
+    align-self:flex-start;
+    font-size:0.9rem;
+  }
+
 }
 </style>
