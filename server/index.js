@@ -24,6 +24,7 @@ mongoose.connect(
     // timestamp: true
   },
   ()=>{
+    console.log(typeof process.env.MONGODB_URI )
     console.log('connected to mongodb atlas');
   }
 );
