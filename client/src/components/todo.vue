@@ -70,6 +70,13 @@ import JavaScript from './languages/JavaScript.vue';
 import TypeScript from './languages/TypeScript.vue';
 import Python from './languages/Python.vue';
 import Go from './languages/Go.vue';
+import HTML from './languages/HTML.vue';
+import CSS from './languages/CSS.vue';
+import PHP from './languages/PHP.vue';
+import Java from './languages/Java.vue';
+import Ruby from './languages/Ruby.vue';
+import Angular from './languages/Angular.vue';
+import C from './languages/C.vue';
 import Express from './languages/Express.vue';
 
 export default {
@@ -91,7 +98,14 @@ export default {
     TypeScript,
     Python,
     Go,
-    Express
+    Express,
+    CSS,
+    HTML,
+    PHP,
+    Java,
+    C,
+    Ruby,
+    'Angular.js':Angular,
   },
   async created(){
     await this.init();

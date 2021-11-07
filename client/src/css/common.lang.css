@@ -137,7 +137,8 @@
 }
 
 .submit-button-wrapper > div{
-  color:dimgray
+  color:dimgray;
+  font-size:0.9rem;
 }
 
 .submit-button{
@@ -151,4 +152,19 @@
   border:none;
   box-shadow: 2px 2px 3px 0 rgba(146, 146, 146, 0.5);
   cursor:pointer;
+}
+
+@media (max-width:576px){
+  .submit-button-wrapper{
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .submit-button-wrapper > div{
+    text-align: start;
+  }
+
+  .submit-button{
+    text-align: center;
+  }
 }
