@@ -1,11 +1,32 @@
 <template>
-  <div class="footer">
+  <section class="footer">
     <ul class="footer-list">
-      <li><router-link to="/dashboard">d</router-link></li>
-      <li><router-link to="/todo">todo</router-link></li>
-      <li><router-link to="/timer">timer</router-link></li>
+      <li>
+        <router-link to="/dashboard">
+          <font-awesome-icon 
+            icon="chart-pie" 
+            class="font"
+          />
+        </router-link>
+      </li>
+      <li>
+        <router-link to="/timer">
+          <font-awesome-icon 
+            icon="clock" 
+            class="font"
+          />
+        </router-link>
+      </li>
+      <li>
+        <router-link to="/todo">
+          <font-awesome-icon 
+            icon="th-list" 
+            class="font"
+          />
+        </router-link>
+      </li>
     </ul>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -18,7 +39,11 @@ export default {
 .footer{
   display: none;
   z-index:2;
+}
 
+.footer .font{
+  width:30px;
+  height:30px;
 }
 
 /* footer Extra small device (less than 576px) */
@@ -26,14 +51,19 @@ export default {
   .footer{
     position: fixed;
     bottom: 0;
-    background-color: bisque;
+    background-color:#fff;
     height: 55px;
     width:100%;
     display:block;
   }
   .footer-list {
+    margin-top:10px;
     display: flex;
     justify-content: space-around;
+  }
+
+  .font{
+    color:#333;
   }
 }
 

@@ -1,43 +1,40 @@
 <template>
-  <div>
-    <div >
-      <form>
-        <div>
-          <label for="Email1" >Email address</label>
-          <input 
-            type="email" 
-            id="Email1" 
-            v-model="register_email"
-          >
-          <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-        </div>
-        <div>
-          <label for="exampleInputUsername1">User name</label>
-          <input 
-            type="text" 
-            id="exampleInputUsername1"
-            v-model="register_username"
-          >
-        </div>
-        <div >
-          <label for="exampleInputPassword1" >Password</label>
-          <input 
-            type="password" 
-            id="exampleInputPassword1"
-            v-model="register_password"
-          >
-        </div>
-        <div class="mb-3 form-check">
-          <input type="checkbox"  id="exampleCheck1">
-          <label  for="exampleCheck1">Check me out</label>
-        </div>
+  <div id="register">
+    <h2>&lt;record-lang&gt;</h2>
+    <form>
+      <div>
+        <label for="Email1" >Email address : </label>
         <input 
-          type="button" 
-          v-on:click="submit_register()"
-          value="submit"
+          type="email" 
+          id="Email1" 
+          v-model="register_email"
         >
-      </form>    
-    </div>
+        <div id="emailHelp" class="form-text">
+          <p class="text-dimgray">We'll never share your email with anyone else.</p>
+        </div>
+      </div>
+      <div>
+        <label for="exampleInputUsername1">User name : </label>
+        <input 
+          type="text" 
+          id="exampleInputUsername1"
+          v-model="register_username"
+        >
+      </div>
+      <div >
+        <label for="exampleInputPassword1" >Password : </label>
+        <input 
+          type="password" 
+          id="exampleInputPassword1"
+          v-model="register_password"
+        >
+      </div>
+      <input 
+        type="button" 
+        v-on:click="submit_register()"
+        value="register"
+      >
+    </form>    
   </div>
 </template>
 
@@ -73,5 +70,12 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+#register{
+  height:100vh;
+  color:lightcyan;
+}
+</style>
 
 

@@ -1,6 +1,7 @@
 <template>
   <div 
     class="aside"
+    v-bind:class="{asidenone:isNone}"
   >
     <nav>
       <ul>
@@ -28,8 +29,26 @@ export default {
         {name:'タイマー',path:'/timer'},
         {name:'ToDoリスト',path:'/todo'},
       ],
+      isNone:false
     }
   },
+  created(){
+    const path = this.$route.path;
+    if(path === '/register' || path === '/login'){
+      this.isNone = true;
+    }else{
+      this.isNone = false;
+    }
+  },
+  watch:{
+    $route(to){
+      if(to.path === '/register' || to.path === '/login'){
+        this.isNone = true;
+      }else{
+        this.isNone = false;
+      }
+    }
+  }
 }
 </script>
 
@@ -47,5 +66,9 @@ export default {
 .aside a{
   margin:15px 40px;
   display:block;  
+}
+
+.asidenone{
+  display:none;
 }
 </style>
