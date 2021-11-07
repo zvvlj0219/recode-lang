@@ -44,6 +44,7 @@
   margin-top: 10px;
   padding-top:2px;
   padding-bottom:2px;
+  color:lightcyan;
 }
 .task:hover{
   border-top: 2px solid rgba(146, 146, 146,0.7 );
