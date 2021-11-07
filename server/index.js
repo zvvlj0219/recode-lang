@@ -24,7 +24,7 @@ mongoose.connect(
     // timestamp: true
   },
   ()=>{
-    console.log('connected to mongodb atlas')
+    console.log('connected to mongodb atlas');
   }
 );
 
@@ -43,12 +43,20 @@ app.use('/api/v1/account',authRoute);
 
 
 //handle production
-if(process.env.NODE_ENV === 'produnction'){
-  //static folder
-  app.use(express.static(__dirname + '/public'));
-  //handle spa
-  app.get(/.*/,(req,res)=>res.sendFile(__dirname + 'public/index.html'));
-}
+// if(process.env.NODE_ENV === 'production'){
+  //   console.log('production mode')
+  //   //static folder
+  //   app.use(express.static(__dirname + '/public'));
+  //   //handle spa
+  //   app.get(/.*/,(req,res)=>res.sendFile(__dirname + 'public/index.html'));
+  // }
+
+app.use(express.static(__dirname + '/public'));
+//handle spa
+app.get(/.*/,(req,res)=>{
+  console.log('production')
+  res.sendFile(__dirname + 'public/index.html')
+});
 
 // server 
 const port = process.env.PORT || 5000;
