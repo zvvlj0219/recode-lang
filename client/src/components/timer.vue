@@ -6,17 +6,26 @@
         <div class="inner-circle">
           <div class="circle-content">
             <div class="selected_lang">{{selected_lang}}</div>
-            <div class="lang_logo">ロゴ:{{selected_lang}}</div>
+            <div
+              class="logo_img"
+            >
+              <img 
+                v-bind:src="srcurl"
+                v-bind:alt="selected_lang"
+              >
+            </div>
             <div class="config_lang">
               <ModalComponent>
                 <template v-slot:title>
-                  <div>ここに歯車</div>
+                  <font-awesome-icon 
+                    icon="cog" 
+                    class="font-cog"
+                  />
                 </template>
                 <template v-slot:modal>
-                  <div>
-                    <ul class="radio-wrapper">
+                  <div class="radio-wrapper">
+                    <ul >
                       <li 
-                        class="radio-list"
                         v-for="lang in all_langs"
                         v-bind:key="lang.language"
                       >
@@ -140,6 +149,11 @@ export default {
       past_record:[]
     }
   },
+  computed:{
+    srcurl(){
+      return require(`../assets/${this.selected_lang}.png`);
+    }
+  },
   components:{
     ModalComponent
   },
@@ -167,11 +181,11 @@ export default {
       const intervalId = setInterval(()=>{
         el.style.transform = `scale(${scale})`;
         scale += 0.03;
-        if(scale > 1.17){
+        if(scale > 1.21){
           clearInterval(intervalId);
           done();
         }
-      },30)
+      },20)
     },
     async init(){
       this.past_record = await timerService.getTime();
@@ -285,10 +299,66 @@ export default {
   z-index: 2;
 }
 
+/*circle content*/
 .circle-content {
   width:280px;
   height:280px;
+  color:#333;
 }
+.config_lang{
+  text-align:end;
+  color:darkgray;
+  position:relative;
+}
+
+.selected_lang{
+  text-align:center;
+  font-size:4rem;
+  color:lightcyan;
+  opacity:0.8;
+}
+
+.logo_img{
+  display:flex;
+  margin:0 auto;
+  width:230px;
+  height:230px;
+}
+
+
+.selected_lang{
+  margin-top:0;
+}
+
+.logo_img img{
+  width:100%;
+  height:auto;
+  display:block;
+  align-items:center;
+}
+
+.font-cog{
+  opacity:0.8;
+  border:5px solid rgba(224,255,255,0.8);
+  border-radius:10px;
+  padding:3px;
+  width:30px;
+  height:30px;
+  position:absolute;
+  top:-100px;
+  right:10px;
+}
+
+
+.radio-wrapper {
+  text-align:start;
+  padding-left:50px;
+}
+
+.radio-wrapper li{
+  font-size:1.2rem;
+}
+
 
 /*time manegement*/
 .time-management{
@@ -319,6 +389,7 @@ export default {
 .start_btn{
   background-color:skyblue;
 }
+
 .cancel_btn{
   background-color:lightcoral;
 }
@@ -395,10 +466,32 @@ export default {
     left:75px;
   }
   .circle-content {
-    width:200px;
-    height:200px;
+    width:250px;
+    height:250px;
   }
 
+  .selected_lang{
+    font-size:3.5rem;
+  }
+
+  .selected_lang{
+    margin-top:0;
+  }
+
+  .logo_img{
+    width:200px;
+    height:200px
+  }
+
+  .font-cog{
+    border:5px solid rgba(224,255,255,0.8);
+    border-radius:10px;
+    padding:3px;
+    width:30px;
+    height:30px;
+    top:-50px;
+    right:20px;
+  }
 
   .time-management{
     grid-column:1;
@@ -446,20 +539,42 @@ export default {
     left:0;
   }
   .inner-circle{
-    width:250px;
-    height:250px;
-    top:25px;
-    left:25px;
+    width:260px;
+    height:260px;
+    top:20px;
+    left:20px;
   }
   .dummy-circle{
-    width:250px;
-    height:250px;
-    top:25px;
-    left:25px;
+    width:260px;
+    height:260px;
+    top:20px;
+    left:20px;
   }
   .circle-content {
-    width:100px;
-    height:100px;
+    width:180px;
+    height:180px;
+  }
+  .selected_lang{
+    font-size:2.5rem;
+  }
+
+  .selected_lang{
+    margin-top:0;
+  }
+
+  .logo_img{
+    width:150px;
+    height:150px;
+  }
+
+  .font-cog{
+    border:5px solid rgba(224,255,255,0.8);
+    border-radius:10px;
+    padding:3px;
+    width:30px;
+    height:30px;
+    top:-50px;
+    right:10px;
   }
 
   .time-management{
@@ -508,9 +623,29 @@ export default {
     left:10px;
   }
   .circle-content {
-    width:100px;
-    height:100px;
+    width:180px;
+    height:180px;
   }
+
+  .selected_lang{
+    margin-top:5px;
+  }
+
+  .logo_img{
+    width:130px;
+    height:130px;
+  }
+
+  .font-cog{
+    border:5px solid rgba(224,255,255,0.8);
+    border-radius:10px;
+    padding:3px;
+    width:30px;
+    height:30px;
+    top:-50px;
+    right:10px;
+  }
+
 
   .time-management{
     width:80%;

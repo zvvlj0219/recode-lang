@@ -1,6 +1,8 @@
 <template>
   <section class="dashboard">
-    <h2 class="text-center text-lightcyan my-1">令和３年８月２日</h2>
+    <h2 class="text-center text-lightcyan my-1">
+      {{date}}
+    </h2>
     <h3 
       class="norecords text-orange"
       v-if="norecords">まだレコードがありません</h3>
@@ -58,6 +60,13 @@ export default {
     Bar,
   },
   computed:{
+    date(){
+      let dt = new Date();
+      let y = dt.getFullYear();
+      let m = dt.getMonth();
+      let d = dt.getDate();
+      return `${y}年${m+1}月${d}日`;
+    },
     chart_styles(){
       return {
         height:`${this.height}px`,
