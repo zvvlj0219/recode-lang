@@ -16,7 +16,7 @@ dotenv.config();
 
 //connect to mongodb atlas
 mongoose.connect(
-  process.env.MONGODB_URI,
+  `${process.env.MONGODB_URI}`,
   {
     useUnifiedTopology : true,
     useNewUrlParser : true,
@@ -24,7 +24,7 @@ mongoose.connect(
     // timestamp: true
   },
   ()=>{
-    console.log(typeof process.env.MONGODB_URI )
+    console.log(process.env.MONGODB_URI )
     console.log('connected to mongodb atlas');
   }
 );
@@ -54,7 +54,7 @@ app.use('/api/v1/account',authRoute);
 
 app.use(express.static(__dirname + '/public'));
 //handle spa
-app.get(/.*/,(req,res)=>{
+app.get('/*',(req,res)=>{
   console.log('production')
   res.sendFile(__dirname + 'public/index.html')
 });
