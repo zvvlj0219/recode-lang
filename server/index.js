@@ -24,7 +24,6 @@ mongoose.connect(
     // timestamp: true
   },
   ()=>{
-    console.log(typeof process.env.MONGODB_URI )
     console.log('connected to mongodb atlas');
   }
 );
@@ -45,7 +44,7 @@ app.use('/api/v1/account',authRoute);
 
 //handle production
 if(process.env.NODE_ENV === 'production'){
-  console.log('production mode')
+  console.log(process.env.NODE_ENV)
   //static folder
   app.use(express.static(__dirname + '/public'));
   //handle spa
@@ -58,4 +57,4 @@ if(process.env.NODE_ENV === 'production'){
 const port = process.env.PORT || 5000;
 app.listen(port,()=>{
   console.log(`server is active port ${port}`);
-})
+});
