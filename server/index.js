@@ -45,10 +45,10 @@ app.use('/api/v1/account',authRoute);
 if(process.env.NODE_ENV === 'production'){
   console.log(process.env.NODE_ENV)
   //static folder
-  app.use(express.static(__dirname + '/public'));
+  app.use(express.static(__dirname + '/public/'));
   //handle spa
   app.get('/',  (req,res)=>{
-    res.sendFile(__dirname + 'public/index.html');
+    res.sendFile(__dirname + '/public/index.html');
   });
 }
 
