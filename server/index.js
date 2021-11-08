@@ -48,7 +48,8 @@ if(process.env.NODE_ENV === 'production'){
   app.use(express.static(__dirname + '/public/'));
   //handle spa
   app.get('/',  (req,res)=>{
-    res.sendFile(__dirname + '/public/index.html');
+    // res.sendFile(__dirname + '/public/index.html');
+    res.sendFile('./public/index.html');
   });
 }
 
