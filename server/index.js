@@ -44,6 +44,7 @@ app.use('/api/v1/account',authRoute);
 //handle production
 if(process.env.NODE_ENV === 'production'){
   console.log(process.env.NODE_ENV)
+  console.log(__dirname + '/public/index.html')
   //static folder
   app.use(express.static(__dirname + '/public'));
   //handle spa
