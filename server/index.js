@@ -7,24 +7,6 @@ const app = express();
 const dotenv = require('dotenv');
 dotenv.config();
 
-//connect to mongodb atlas
-const mongoose = require('mongoose');
-try{
-  mongoose.connect(
-    process.env.MONGODB_URI,
-    {
-      useUnifiedTopology : true,
-      bufferCommands: false,
-      useNewUrlParser : true,
-      useFindAndModify : false,
-    },
-    ()=>{
-      console.log('connected to mongodb atlas');
-    }
-  );
-}catch(err){
-  console.log(err)
-}
 
 
 //import routes
@@ -46,6 +28,23 @@ app.use('/api/v1/timer',timerRoute);
 app.use('/api/v1/account',authRoute);
 app.use('/api/v1/account',authRoute);
 
+//connect to mongodb atlas
+const mongoose = require('mongoose');
+try{
+  mongoose.connect(
+    process.env.MONGODB_URI,
+    {
+      useUnifiedTopology : true,
+      useNewUrlParser : true,
+      useFindAndModify : false,
+    },
+    ()=>{
+      console.log('connected to mongodb atlas');
+    }
+  );
+}catch(err){
+  console.log(err)
+}
 
 //handle production
 if(process.env.NODE_ENV === 'production'){
