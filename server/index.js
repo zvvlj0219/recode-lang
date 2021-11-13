@@ -10,22 +10,14 @@ dotenv.config();
 
 //connect to mongodb atlas
 const mongoose = require('mongoose');
-const connectStart = async () =>{
-  try{
-    await mongoose.connect(
-      process.env.MONGODB_URI,
-      {
-        useUnifiedTopology : true,
-        useNewUrlParser : true,
-        useFindAndModify : false,
-      },
-    );
-    console.log('connected to mongodb atlas');
-  }catch(err){  
-    console.log(err);
-  }
-}
-connectStart();
+mongoose.connect(
+  process.env.MONGODB_URI,
+  {
+    useUnifiedTopology : true,
+    useNewUrlParser : true,
+    useFindAndModify : false,
+  },
+);
 
 //import routes
 const dashboardRoute = require('./routes/api/v1/dashboard');
