@@ -51,8 +51,6 @@ app.use('/api/v1/account',authRoute);
 
 //handle production
 if(process.env.NODE_ENV === 'production'){
-  console.log(process.env.NODE_ENV)
-  console.log(__dirname + '/public/index.html')
   //static folder
   app.use(express.static(__dirname + '/public'));
   //handle spa
@@ -64,5 +62,6 @@ if(process.env.NODE_ENV === 'production'){
 // server 
 const port = process.env.PORT || 5000;
 app.listen(port,()=>{
+  console.log('NODE_ENV is '+ process.env.NODE_ENV)
   console.log(`server is active port ${port}`);
 });

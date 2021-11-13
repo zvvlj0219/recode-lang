@@ -51,10 +51,15 @@ router.post('/login', async (req,res)=>{
   };
   
   //checking if the email exists
-  const account = await Accounts.findOne({email:req.body.email});
-  if(!account){
-    return res.status(400).send('Email is not found');
-  }
+  const account = await Accounts.findOne(
+    {email:req.body.email},
+    (error,response)=>{
+      if(error){
+        res.status(400).send('Email is not found');
+      }
+      return;
+    }
+  );
   
   //password is correct
   const validPass = await bcrypt.compare(req.body.password, account.password);
