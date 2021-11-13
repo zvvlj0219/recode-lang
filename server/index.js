@@ -1,4 +1,5 @@
 const express = require('express');
+require('express-async-errors');
 const cors = require('cors');
 const cookieParser = require("cookie-parser");
 const app = express();
@@ -7,7 +8,26 @@ const app = express();
 const dotenv = require('dotenv');
 dotenv.config();
 
-
+//connect to mongodb atlas
+const mongoose = require('mongoose');
+const connectStart = async () =>{
+  try{
+    await mongoose.connect(
+      process.env.MONGODB_URI,
+      {
+        useUnifiedTopology : true,
+        useNewUrlParser : true,
+        useFindAndModify : false,
+      },
+      ()=>{
+        console.log('connected to mongodb atlas');
+      }
+    );
+  }catch(err){  
+    console.log(err);
+  }
+}
+connectStart();
 
 //import routes
 const dashboardRoute = require('./routes/api/v1/dashboard');
@@ -28,23 +48,6 @@ app.use('/api/v1/timer',timerRoute);
 app.use('/api/v1/account',authRoute);
 app.use('/api/v1/account',authRoute);
 
-//connect to mongodb atlas
-const mongoose = require('mongoose');
-try{
-  mongoose.connect(
-    process.env.MONGODB_URI,
-    {
-      useUnifiedTopology : true,
-      useNewUrlParser : true,
-      useFindAndModify : false,
-    },
-    ()=>{
-      console.log('connected to mongodb atlas');
-    }
-  );
-}catch(err){
-  console.log(err)
-}
 
 //handle production
 if(process.env.NODE_ENV === 'production'){
