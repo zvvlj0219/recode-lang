@@ -14,6 +14,7 @@ try{
     process.env.MONGODB_URI,
     {
       useUnifiedTopology : true,
+      bufferCommands: false,
       useNewUrlParser : true,
       useFindAndModify : false,
     },
