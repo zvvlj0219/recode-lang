@@ -7,25 +7,30 @@ const app = express();
 const dotenv = require('dotenv');
 dotenv.config();
 
+//connect to mongodb atlas
+const mongoose = require('mongoose');
+try{
+  mongoose.connect(
+    process.env.MONGODB_URI,
+    {
+      useUnifiedTopology : true,
+      useNewUrlParser : true,
+      useFindAndModify : false,
+    },
+    ()=>{
+      console.log('connected to mongodb atlas');
+    }
+  );
+}catch(err){
+  console.log(err)
+}
+
+
 //import routes
 const dashboardRoute = require('./routes/api/v1/dashboard');
 const todoRoute = require('./routes/api/v1/todo');
 const timerRoute = require('./routes/api/v1/timer');
 const authRoute = require('./routes/api/v1/auth');
-
-//connect to mongodb atlas
-const mongoose = require('mongoose');
-mongoose.connect(
-  process.env.MONGODB_URI,
-  {
-    useUnifiedTopology : true,
-    useNewUrlParser : true,
-    useFindAndModify : false,
-  },
-  ()=>{
-    console.log('connected to mongodb atlas');
-  }
-);
 
 // middleware
 app.use(express.json());
@@ -50,8 +55,6 @@ if(process.env.NODE_ENV === 'production'){
   //handle spa
   app.get('/',  (req,res)=>{
     res.sendFile(__dirname + 'public/index.html');
-    // res.sendFile(__dirname + '/public/index.html');
-    // res.sendFile('./public/index.html');
   });
 }
 
