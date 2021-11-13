@@ -1,33 +1,37 @@
 const express = require('express');
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
 const cors = require('cors');
 const cookieParser = require("cookie-parser");
 const app = express();
+
+//load .env
+const dotenv = require('dotenv');
+dotenv.config();
+
+//connect to mongodb atlas
+const mongoose = require('mongoose');
+try{
+  mongoose.connect(
+    process.env.MONGODB_URI,
+    {
+      useUnifiedTopology : true,
+      bufferCommands: false,
+      useNewUrlParser : true,
+      useFindAndModify : false,
+    },
+    ()=>{
+      console.log('connected to mongodb atlas');
+    }
+  );
+}catch(err){
+  console.log(err)
+}
+
 
 //import routes
 const dashboardRoute = require('./routes/api/v1/dashboard');
 const todoRoute = require('./routes/api/v1/todo');
 const timerRoute = require('./routes/api/v1/timer');
 const authRoute = require('./routes/api/v1/auth');
-
-//load .env
-dotenv.config();
-
-//connect to mongodb atlas
-mongoose.connect(
-  process.env.MONGODB_URI,
-  {
-    useUnifiedTopology : true,
-    useNewUrlParser : true,
-    useFindAndModify : false,
-    // timestamp: true
-  },
-  ()=>{
-    console.log(typeof process.env.MONGODB_URI )
-    console.log('connected to mongodb atlas');
-  }
-);
 
 // middleware
 app.use(express.json());
@@ -44,23 +48,19 @@ app.use('/api/v1/account',authRoute);
 
 
 //handle production
-// if(process.env.NODE_ENV === 'production'){
-  //   console.log('production mode')
-  //   //static folder
-  //   app.use(express.static(__dirname + '/public'));
-  //   //handle spa
-  //   app.get(/.*/,(req,res)=>res.sendFile(__dirname + 'public/index.html'));
-  // }
-
-app.use(express.static(__dirname + '/public'));
-//handle spa
-app.get('/*',(req,res)=>{
-  console.log('production')
-  res.sendFile(__dirname + '/public/index.html')
-});
+if(process.env.NODE_ENV === 'production'){
+  console.log(process.env.NODE_ENV)
+  console.log(__dirname + '/public/index.html')
+  //static folder
+  app.use(express.static(__dirname + '/public'));
+  //handle spa
+  app.get('/',  (req,res)=>{
+    res.sendFile(__dirname + 'public/index.html');
+  });
+}
 
 // server 
 const port = process.env.PORT || 5000;
 app.listen(port,()=>{
   console.log(`server is active port ${port}`);
-})
+});
