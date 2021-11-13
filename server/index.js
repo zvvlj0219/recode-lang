@@ -19,10 +19,8 @@ const connectStart = async () =>{
         useNewUrlParser : true,
         useFindAndModify : false,
       },
-      ()=>{
-        console.log('connected to mongodb atlas');
-      }
     );
+    console.log('connected to mongodb atlas');
   }catch(err){  
     console.log(err);
   }
