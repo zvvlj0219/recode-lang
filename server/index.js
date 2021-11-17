@@ -17,7 +17,27 @@ mongoose.connect(
     useNewUrlParser : true,
     useFindAndModify : false,
   },
-);
+).then(()=>{
+  console.log('connect mongo response');
+}).catch(err=>{
+  console.log(err);
+});
+// const startMongo = async function(){
+//   await mongoose.connect(
+//     process.env.MONGODB_URI,
+//     {
+//       useUnifiedTopology : true,
+//       useNewUrlParser : true,
+//       useFindAndModify : false,
+//     },
+//   );
+// }
+
+// try{
+//   startMongo();
+// }catch(err){
+//   console.log(err);
+// }
 
 //import routes
 const dashboardRoute = require('./routes/api/v1/dashboard');
