@@ -13,7 +13,6 @@ mongoose.connect(
   {
     useUnifiedTopology : true,
     useNewUrlParser : true,
-    useFindAndModify : false,
   },
 ).then(()=>{
     console.log('connect mongo response');
