@@ -1,8 +1,6 @@
 const express = require('express');
-require('express-async-errors');
 const cors = require('cors');
 const cookieParser = require("cookie-parser");
-const app = express();
 
 //load .env
 const dotenv = require('dotenv');
@@ -18,23 +16,25 @@ mongoose.connect(
     useFindAndModify : false,
   },
 ).then(()=>{
-  console.log('connect mongo response');
-}).catch(err=>{
-  console.log(err);
-});
+    console.log('connect mongo response');
+  }
+).catch(err=>{
+    console.log(err);
+  }
+);
 // const startMongo = async function(){
-//   await mongoose.connect(
+  //   await mongoose.connect(
 //     process.env.MONGODB_URI,
 //     {
-//       useUnifiedTopology : true,
-//       useNewUrlParser : true,
+  //       useUnifiedTopology : true,
+  //       useNewUrlParser : true,
 //       useFindAndModify : false,
 //     },
 //   );
 // }
 
 // try{
-//   startMongo();
+  //   startMongo();
 // }catch(err){
 //   console.log(err);
 // }
@@ -44,6 +44,9 @@ const dashboardRoute = require('./routes/api/v1/dashboard');
 const todoRoute = require('./routes/api/v1/todo');
 const timerRoute = require('./routes/api/v1/timer');
 const authRoute = require('./routes/api/v1/auth');
+
+//express
+const app = express();
 
 // middleware
 app.use(express.json());
