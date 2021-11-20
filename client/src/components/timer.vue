@@ -207,7 +207,7 @@ export default {
         this.countDown(startTime);
       },1000);
 
-      if(this.time_left == '00:00:00' || this.time_left == '00:00'){
+      if(this.time_left == '00:00:00' || this.time_left == '00:00' || this.time_left < 0){
         clearTimeout(this.timeoutId);
         this.addRecord();
         this.clockEvent = false;

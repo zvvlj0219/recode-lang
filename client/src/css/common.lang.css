@@ -7,6 +7,7 @@
   width:90%;
   height: 30px;
   text-align: end;
+  z-index: 2;
 }
 
 .all_delete_botton{
@@ -74,13 +75,13 @@
 
 .newtask_form {
   width:400px;
-  height:30px;
   margin:15px;
+  display: flex;
 }
 
 .newtask_text{
-  width:60%;
-  height:30px;
+  width:300px;
+  height:34px;
   font-size:15px;
   color:lightcyan;
   background-color: rgba(33,37,41, 0.2);
@@ -143,7 +144,7 @@
 
 .submit-button{
   margin-top:20px;
-  margin-left: 25%;
+  margin-left: 17%;
   width:150px;
   height: 40px;
   font-size: 15px;
@@ -167,4 +168,37 @@
   .submit-button{
     text-align: center;
   }
+
+  .newtask_form{
+    flex-direction: column;
+  }
+  .newtask_button,.newtask_button.cancel{
+    margin-left:230px;
+  }
+  
+}
+
+@media (max-width:300px){
+  .newtask_form {
+    width:200px;
+    margin:5px;
+  }
+  
+  .newtask_text{
+    width:200px;
+    height:34px;
+    font-size:15px;
+    color:lightcyan;
+    background-color: rgba(33,37,41, 0.2);
+    border:1px solid #495057;
+  }
+  
+  .newtask_form{
+    flex-direction: column;
+  }
+  .newtask_button,.newtask_button.cancel{
+    width:50px;
+    margin-left:150px;
+  }
+  
 }

@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const cookieParser = require("cookie-parser");
+const history = require('connect-history-api-fallback');
 
 //load .env
 const dotenv = require('dotenv');
@@ -21,22 +22,6 @@ mongoose.connect(
     console.log(err);
   }
 );
-// const startMongo = async function(){
-  //   await mongoose.connect(
-//     process.env.MONGODB_URI,
-//     {
-  //       useUnifiedTopology : true,
-  //       useNewUrlParser : true,
-//       useFindAndModify : false,
-//     },
-//   );
-// }
-
-// try{
-  //   startMongo();
-// }catch(err){
-//   console.log(err);
-// }
 
 //import routes
 const dashboardRoute = require('./routes/api/v1/dashboard');
@@ -52,6 +37,14 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cors());
 app.use(cookieParser());
+//connect-history-api-fallback
+const staticFileMiddleware = express.static(__dirname + '/public');
+app.use(staticFileMiddleware);
+app.use(history({
+  disableDotRule: true,
+  verbose: true
+}));
+app.use(staticFileMiddleware);
 
 //routes middleware
 app.use('/api/v1/dashboard',dashboardRoute);
