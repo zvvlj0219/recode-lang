@@ -36,8 +36,6 @@ router.get('/', verify, async (req,res)=>{
       }
     ).select(['language','study_time','timestamps']);
       
-    console.log(zeroday);
-
     const todo = await Todo.find(
       {
         email:email,
@@ -48,9 +46,6 @@ router.get('/', verify, async (req,res)=>{
         isDone:true
       }
     ).select(['language','study_time','timestamps']);
-
-    console.log(timer);
-    console.log(todo);
 
     res.send({
       timer:timer,

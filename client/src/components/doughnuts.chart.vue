@@ -1,6 +1,5 @@
 <script>
 import { Doughnut } from 'vue-chartjs';
-import _ from 'lodash';
 import all_langs from '../modules/languages.js';
 export default {
   extends:Doughnut,
@@ -17,19 +16,25 @@ export default {
   },
   methods:{
     render(){
+      //label
       const labels = this.today.map(el=>{
         return el.language;
       })
-
-      const lodash_object = all_langs.filter(element=>{
-        return _.findIndex(this.today, {'language': element.language}) !== -1 ;
+      //background color
+      let backgroundColor = [];
+      this.today.forEach(data=>{
+        let colorIndex;
+        all_langs.forEach((lang,index)=>{
+          if(lang.language == data.language){
+            colorIndex = index;
+          }
+        })
+        backgroundColor.push(all_langs[colorIndex].color)
       })
-      const backgroundColor = lodash_object.map(el=>{
-        return el.color;
-      });
       
+      //study_time data
       const study_time = this.today.map(el=>{
-        return Math.floor(el.study_time * 100)/10;
+        return el.study_time;
       })
 
       const data = {

@@ -50,7 +50,7 @@ router.post('/',async (req,res)=>{
       created_at:'todo',
       text:req.body.text,
       checked:false,
-      study_time:1,  
+      study_time:0.5,//固定で30分,  
       isDone:false,  
       timestamps:new Date()
     }
@@ -65,7 +65,7 @@ router.post('/',async (req,res)=>{
 //update checked
 router.put('/checked',async (req,res)=>{
   try{
-    const result = await Todo.findByIdAndUpdate(
+    const result = Todo.findByIdAndUpdate(
       //id
       req.body.id,
       //update

@@ -100,18 +100,22 @@ export default {
 
       //データ代入
       timer.forEach(el=>{
-        this.all_records.push(el);
+        let study_time = Math.floor(el.study_time * 1000)/1000;
+        const data = {
+          language:el.language,
+          study_time:study_time,
+          timestamps:el.timestamps,
+          _id:el._id
+        }
+        this.all_records.push(data);
       });
 
       todo.forEach(el=>{
         this.all_records.push(el);
       })
-
       //aggregate records
       this.weekly_records =  dashboardService.aggregate_weekly(this.all_records);
       this.today_records =  dashboardService.aggregate_today(this.all_records);
-      console.log('today')
-      console.log(this.today_records)
       if(!this.today_records[0]){
         this.norecords = true;
       }

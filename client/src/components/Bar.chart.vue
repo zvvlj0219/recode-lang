@@ -15,9 +15,6 @@ export default {
   },
   methods:{
     render(){
-      console.log('weekly records')
-      console.log(this.weekly)
-
       let today = new Date();
       let day = today.getDay();
       let week = [];
