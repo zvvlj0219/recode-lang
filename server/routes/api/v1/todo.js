@@ -105,7 +105,7 @@ router.put('/list',async (req,res)=>{
 });
 
 //update isDone
-router.put('/isDone', (req,res)=>{
+router.put('/isDone', async (req,res)=>{
   try{
     const id = req.body.id;
     id.forEach(async el=>{

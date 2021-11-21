@@ -57,12 +57,17 @@ class DashboardService {
     }
     //2重複を省く
     lang_box.forEach((element,index)=>{
+      let study_time = arr1[index].study_time;
+      if(study_time < 1){
+        study_time = Math.floor(study_time * 100)/10;
+        console.log(study_time)
+      }
       if(result.indexOf(element) == -1){
         result.push(element);
         today_records.push({
           id:index,
           language:arr1[index].language,
-          study_time:arr1[index].study_time,
+          study_time:study_time,
         })
       }else{
         const duplicatedIndex = result.indexOf(element);

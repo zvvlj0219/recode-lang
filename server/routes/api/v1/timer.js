@@ -28,12 +28,11 @@ router.get('/', verify ,async (req,res)=>{
 router.post('/',async (req,res)=>{
   try{
     const email = req.cookies.access_data.email;
-    const study_time = Math.ceil(req.body.study_time)/10;
     const data = {
       email:email,
       language:req.body.language,
       created_at:'timer',
-      study_time:study_time,
+      study_time:req.body.study_time,
       timestamps:new Date()
     }
     const newTimer = await Timer.create(data);
