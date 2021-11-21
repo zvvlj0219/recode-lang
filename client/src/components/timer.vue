@@ -236,7 +236,11 @@ export default {
     },
     async addRecord(){
       try{
-        const setted_time = Number(this.setted_hour + this.setted_minute/60);
+        let setted_time = Number(this.setted_hour + this.setted_minute/60);
+        if(setted_time < 1){
+        setted_time = Math.floor(setted_time * 100)/10;
+        console.log(setted_time)
+        }
         await timerService.insertTime(this.selected_lang,setted_time);
       }catch(e){
         console.log(e);

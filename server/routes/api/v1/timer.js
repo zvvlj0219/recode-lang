@@ -35,7 +35,7 @@ router.post('/',async (req,res)=>{
     timestamps:new Date()
   }
   try{
-    const newTimer = await Timer.create(data);
+    const newTimer = Timer.create(data).then(()=>console.log('await'));
     await newTimer.save();
     res.status(201).send(newTimer);
   }catch(e){

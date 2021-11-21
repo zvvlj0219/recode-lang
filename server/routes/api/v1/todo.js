@@ -54,7 +54,7 @@ router.post('/',async (req,res)=>{
       isDone:false,  
       timestamps:new Date()
     }
-    const newTodo = await Todo.create(data);
+    const newTodo = Todo.create(data).then(()=>console.log('await'));
     await newTodo.save();
     res.status(201).send(newTodo);
   }catch(e){
@@ -70,7 +70,7 @@ router.put('/checked',async (req,res)=>{
       req.body.id,
       //update
       {checked:req.body.checked}
-    );
+    ).then(()=>console.log('await'));
     if(!result){
       return res.status(404).send();
     }
@@ -85,7 +85,7 @@ router.put('/list',async (req,res)=>{
   try{
     const email = req.cookies.access_data.email;
     const list = req.body.list;
-    const data = await Accounts.findOneAndUpdate(
+    const data = Accounts.findOneAndUpdate(
       {
         email:email
       },
@@ -94,8 +94,8 @@ router.put('/list',async (req,res)=>{
           list:list
         }
       }
-      );
-      if(!data){
+    ).then(()=>console.log('await'));
+    if(!data){
       return res.status(404).send();
     }
     res.send(data);
@@ -109,7 +109,7 @@ router.put('/isDone', async (req,res)=>{
   try{
     const id = req.body.id;
     id.forEach(async el=>{
-      await Todo.findByIdAndUpdate(
+      Todo.findByIdAndUpdate(
         {
           _id:el
         },
@@ -119,7 +119,7 @@ router.put('/isDone', async (req,res)=>{
           }
         }
       );
-    })
+    }).then(()=>console.log('await'));
     res.send()
   }catch(e){
     res.status(500).send();
@@ -133,10 +133,10 @@ router.delete('/',async (req,res)=>{
 
   if(id === null){
     try{
-      const result = await Todo.deleteMany({
+      const result = Todo.deleteMany({
         language:req.body.language,
         created_at:'todo'
-      });
+      }).then(()=>console.log('await'));
       res.send(result);
     }catch(e){
       res.status(500).send();
@@ -145,7 +145,7 @@ router.delete('/',async (req,res)=>{
   
   if(lang === null){
     try{
-      const result = await Todo.findByIdAndDelete(req.body.id);
+      const result = Todo.findByIdAndDelete(req.body.id).then(()=>console.log('await'));
       res.send(result);
     }catch(e){
       res.status(500).send();
