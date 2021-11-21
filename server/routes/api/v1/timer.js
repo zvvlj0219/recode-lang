@@ -9,8 +9,8 @@ const Timer = require('../../../model/timerModel');
 
 //get time
 router.get('/', verify ,async (req,res)=>{
+  console.log(req.cookies.access_data.email)
   try{
-    console.log(req.cookies.access_data.email)
     const email = req.cookies.access_data.email;
     const time = await Timer.find(
       {created_at:'timer',email:email}
@@ -26,15 +26,15 @@ router.get('/', verify ,async (req,res)=>{
 
 //add time
 router.post('/',async (req,res)=>{
+  const email = req.cookies.access_data.email;
+  const data = {
+    email:email,
+    language:req.body.language,
+    created_at:'timer',
+    study_time:req.body.study_time,
+    timestamps:new Date()
+  }
   try{
-    const email = req.cookies.access_data.email;
-    const data = {
-      email:email,
-      language:req.body.language,
-      created_at:'timer',
-      study_time:req.body.study_time,
-      timestamps:new Date()
-    }
     const newTimer = await Timer.create(data);
     await newTimer.save();
     res.status(201).send(newTimer);

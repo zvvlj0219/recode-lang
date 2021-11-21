@@ -29,7 +29,7 @@ export default {
       });
       
       const study_time = this.today.map(el=>{
-        return el.study_time;
+        return Math.floor(el.study_time * 100)/10;
       })
 
       const data = {

@@ -133,14 +133,10 @@ router.delete('/',async (req,res)=>{
 
   if(id === null){
     try{
-      console.log(lang)
       const result = await Todo.deleteMany({
         language:req.body.language,
         created_at:'todo'
       });
-      if(!result){
-        return res.status(404).send();
-      }
       res.send(result);
     }catch(e){
       res.status(500).send();
@@ -149,11 +145,7 @@ router.delete('/',async (req,res)=>{
   
   if(lang === null){
     try{
-      console.log(id);
       const result = await Todo.findByIdAndDelete(req.body.id);
-      if(!result){
-        return res.status(404).send();
-      }
       res.send(result);
     }catch(e){
       res.status(500).send();
