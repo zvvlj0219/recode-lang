@@ -62,7 +62,6 @@ router.post('/',async (req,res)=>{
       console.log('catch')
       console.log(error)
     });
-    await newTodo.save();
     res.status(201).send(newTodo);
   }catch(e){
     console.log('trycatch');

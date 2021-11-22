@@ -39,7 +39,6 @@ router.post('/',async (req,res)=>{
       console.log('catch')
       console.log(error)
     });
-    await newTimer.save();
     res.status(201).send(newTimer);
   }catch(e){
     console.log('trycatch');
