@@ -54,7 +54,7 @@ router.post('/',async (req,res)=>{
       isDone:false,  
       timestamps:new Date()
     }
-    const newTodo = Todo.create(data).then(()=>console.log('await'));
+    const newTodo = Todo.create(data).then(()=>console.log('await')).catch((error)=>console.log(error));
     await newTodo.save();
     res.status(201).send(newTodo);
   }catch(e){
