@@ -35,10 +35,16 @@ router.post('/',async (req,res)=>{
     timestamps:new Date()
   }
   try{
-    const newTimer = Timer.create(data).then(()=>console.log('await')).catch((error)=>console.log(error));
+    const newTimer = Timer.create(data).then(()=>console.log('await')).catch(error=>{
+      console.log('catch')
+      console.log(error)
+    });
+
     await newTimer.save();
     res.status(201).send(newTimer);
   }catch(e){
+    console.log('trycatch');
+    console.log(e);
     res.status(400).send();
   }
 });
