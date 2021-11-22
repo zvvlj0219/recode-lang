@@ -13,6 +13,7 @@ module.exports = function(req,res,next){
     console.log('verifyed')
     next();
   }catch(err){
+    res.redirect('/login')
     res.status(400).send('Invalid Token')
   }
 }

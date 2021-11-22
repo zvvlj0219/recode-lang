@@ -12,8 +12,13 @@
       class="logout"
       v-bind:class="{listactive :droplist}" 
     >
-      
-      <p v-on:click="logout">ログアウト</p>
+      <div v-if="loginStatus">
+        <p v-on:click="logout">ログアウト</p>
+      </div>
+      <div v-else>
+        <p v-on:click="$router.push('/login');toggleList()">ログイン</p>
+        <p v-on:click="$router.push('/register');toggleList()">新規登録</p>
+      </div>
     </div>
   </div>
 </template>
@@ -23,12 +28,20 @@ export default {
   name:'Header',
   data(){
     return {
-      droplist:false
+      droplist:false,
+      loginStatus:null
     }
   },
   computed:{
     loggedinEmail(){
       return this.$store.getters.email;
+    }
+  },
+  watch:{
+    $route(){
+      if(this.$store.getters.idToken){
+        this.loginStatus = true
+      }
     }
   },
   methods:{
@@ -65,14 +78,14 @@ export default {
   width: 0px;
   height: 0px;
   background: transparent;
-  border-top: 9px solid lightcyan;
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
+  border-top: 15px solid lightcyan;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
 }
 .logout{
   background:#fff;
   color:#333;
-  height:40px;
+  height:100px;
   width:150px;
   margin-left:auto;
   position:absolute;

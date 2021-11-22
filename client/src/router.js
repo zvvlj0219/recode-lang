@@ -23,7 +23,7 @@ export default new Router({
         if(store.getters.idToken){
           next()
         }else{
-          alert('access denied');
+          alert('Access Denied');
           next('/login');
         }
       }
@@ -36,7 +36,7 @@ export default new Router({
         if(store.getters.idToken){
           next()
         }else{
-          alert('access denied');
+          alert('Access Denied');
           next('/login');
         }
       }
@@ -49,7 +49,7 @@ export default new Router({
         if(store.getters.idToken){
           next()
         }else{
-          alert('access denied');
+          alert('Access Denied');
           next('/login');
         }
       }

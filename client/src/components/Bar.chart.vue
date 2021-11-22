@@ -52,7 +52,7 @@ export default {
             label:'weelky record',
             //data array
             data:this.weekly.map(el=>{
-              return el.study_time;
+              return el.study_time/60;
             }),
             backgroundColor: [
               'rgba(255, 99, 132, 0.2)',

@@ -121,7 +121,7 @@
             v-bind:key="record._id"
           >
             {{record.language}}&nbsp;&nbsp;
-            {{Math.floor(record.study_time)}}時間{{record.study_time*60}}分&nbsp;&nbsp;
+            {{Math.floor(record.study_time / 60)}}時間{{record.study_time}}分&nbsp;&nbsp;
             {{new Date(record.timestamps).getMonth()+1}}月{{new Date(record.timestamps).getDate()}}日
           </li>
         </ul>
@@ -236,11 +236,9 @@ export default {
     },
     async addRecord(){
       try{
-        let setted_time = Number(this.setted_hour + this.setted_minute/60);
-        if(setted_time < 1){
-        setted_time = Math.floor(setted_time * 100)/10;
+        //分で管理
+        let setted_time = Number(this.setted_hour*60 + this.setted_minute);
         console.log(setted_time)
-        }
         await timerService.insertTime(this.selected_lang,setted_time);
       }catch(e){
         console.log(e);

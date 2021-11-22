@@ -25,12 +25,19 @@
           v-model="login_password"
         >
       </div>
-      <input 
-        type="button" 
-        class="submit"
-        v-on:click="submit_login()"
-        value="login"
-      >
+      <div class="flex">
+        <input 
+          type="button" 
+          class="submit"
+          v-on:click="submit_login()"
+          value="login"
+        >
+        <input 
+          type="button" 
+          value="→register"
+          v-on:click="$router.push('/register')"
+        >
+      </div>
     </form>    
   </div>
 </template>

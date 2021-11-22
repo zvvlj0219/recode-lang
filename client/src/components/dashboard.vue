@@ -24,7 +24,7 @@
             v-bind:key="el.id"
           >
             <td>{{el.language}}</td>
-            <td>{{el.study_time}} Hours</td>
+            <td>{{valid_time(el.study_time)}}</td>
           </tr>
         </table>
       </div>
@@ -76,6 +76,13 @@ export default {
     }
   },
   methods:{
+    valid_time(time){
+      if(time > 60){
+        return `${Math.floor(time/60)} Hours ${time - 60} Minutes`
+      }else{
+        return `${time} Minutes`
+      }
+    },
     resize_charts(){
       const width = window.innerWidth;
       if (width < 576 && width > 400){
@@ -100,10 +107,9 @@ export default {
 
       //データ代入
       timer.forEach(el=>{
-        let study_time = Math.floor(el.study_time * 1000)/1000;
         const data = {
           language:el.language,
-          study_time:study_time,
+          study_time:el.study_time,
           timestamps:el.timestamps,
           _id:el._id
         }

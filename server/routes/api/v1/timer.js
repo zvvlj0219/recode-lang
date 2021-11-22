@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 //verify token function
-const verify = require('./verifyToken');
+const verify = require('../../../middleware/verifyToken');
 
 //mongoose schema
 const Timer = require('../../../model/timerModel');

@@ -3,7 +3,7 @@ const router = express.Router();
 const Accounts = require('../../../model/accountsModel');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs')
-const {registerValidation, loginValidation} = require('../../../validation');
+const {registerValidation, loginValidation} = require('../../../middleware/validation');
 const initialLang = 'JavaScript'
 
 //register

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 //verify token function
-const verify = require('./verifyToken');
+const verify = require('../../../middleware/verifyToken');
 
 //mongoose schema todoSchema and accountsSchema
 const Todo = require('../../../model/todoModel');
@@ -50,7 +50,7 @@ router.post('/',async (req,res)=>{
       created_at:'todo',
       text:req.body.text,
       checked:false,
-      study_time:0.5,//固定で30分,  
+      study_time:30,//固定で30分,  
       isDone:false,  
       timestamps:new Date()
     }
@@ -108,6 +108,7 @@ router.put('/list',async (req,res)=>{
     }
     res.send(data);
   }catch(e){
+    console.log(e)
     res.status(500).send();
   }
 });
@@ -116,8 +117,9 @@ router.put('/list',async (req,res)=>{
 router.put('/isDone', async (req,res)=>{
   try{
     const id = req.body.id;
+    console.log(id)
     id.forEach(async el=>{
-      Todo.findByIdAndUpdate(
+      await Todo.findByIdAndUpdate(
         {
           _id:el
         },
@@ -127,9 +129,11 @@ router.put('/isDone', async (req,res)=>{
           }
         }
       );
-    }).then(()=>console.log('await'));
+    })
+    // .then(()=>console.log('await'));
     res.send()
   }catch(e){
+    console.log(e)
     res.status(500).send();
   }
 })
