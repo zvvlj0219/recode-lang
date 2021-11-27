@@ -7,18 +7,15 @@
         ログインしなおしてください。
       </h3>
       <div>
-        <label for="Email1">Email address</label>
+        <label for="Email1">Eメールアドレス :</label>
         <input 
           type="email" 
           id="Email1" 
           v-model="login_email"
         >
-        <div id="emailHelp" class="form-text">
-          <p class="text-dimgray">We'll never share your email with anyone else.</p>
-        </div>
       </div>
       <div>
-        <label for="Password1" >Password</label>
+        <label for="Password1" >パスワード :</label>
         <input 
           type="password" 
           id="Password1"
@@ -30,11 +27,11 @@
           type="button" 
           class="submit"
           v-on:click="submit_login()"
-          value="login"
+          value="ログイン"
         >
         <input 
           type="button" 
-          value="→register"
+          value="→新規登録"
           v-on:click="$router.push('/register')"
         >
       </div>
@@ -62,12 +59,15 @@ export default {
         const token = response.data.token;
         this.$store.dispatch('updateEmail',email);
         this.$store.dispatch('updateIdToken',token);
-        this.$router.push('/dashboard');
-        this.login_email = '';
-        this.login_password = '';
-        console.log(response.data.email);
+        if(email && token){
+          this.$router.push('/dashboard');
+          this.login_email = '';
+          this.login_password = '';
+          console.log(response.data.email);
+        }
       }catch(e){
         this.errormsg = true;
+        console.log(e)
       }
     }
   }

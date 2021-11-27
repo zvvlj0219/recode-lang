@@ -1,23 +1,23 @@
 <template>
-  <section class="dashboard">
+  <section class="dashboard" >
     <h2 class="text-center text-lightcyan my-1">
       {{date}}
     </h2>
     <h3 
-      class="norecords text-orange"
-      v-if="norecords">まだレコードがありません</h3>
-    <div class="container grid">
-      <div class="today">
+      class="norecordsmsg text-orange"
+      v-if="norecords">本日のレコードがまだありません<br>「タイマー」または「ToDoリスト」でタスクをクリアしてダッシュボードに記録してください</h3>
+    <div class="container grid" v-bind:class="{norecords : !today_records}">
+      <div class="today" v-bind:class="{norecords : !today_records}">
         <Doughnut 
-          v-bind:styles="chart_styles"
+          v-bind:styles="pie_chart_styles"
           v-bind:today="today_records"
         />
       </div>
-      <div class="table">
+      <div class="table" v-if="today_records[0]">
         <table>
           <tr>
-            <th>language</th>
-            <th>time</th>
+            <th>言語</th>
+            <th>時間</th>
           </tr>
           <tr 
             v-for="el in today_records" 
@@ -30,7 +30,7 @@
       </div>
       <div class="weekly">
         <Bar 
-          v-bind:styles="chart_styles"
+          v-bind:styles="bar_chart_styles"
           v-bind:weekly="weekly_records"
         />
       </div>
@@ -51,8 +51,11 @@ export default {
       today_records:[],
       weekly_records:[],
       norecords:false,
-      height:400,
-      width:400,
+      pieheight:400,
+      piewidth:400,
+      barheight:400,
+      barwidth:400,
+      windowWidth:window.innerWidth
     }
   },
   components:{
@@ -67,12 +70,24 @@ export default {
       let d = dt.getDate();
       return `${y}年${m+1}月${d}日`;
     },
-    chart_styles(){
+    pie_chart_styles(){
       return {
-        height:`${this.height}px`,
-        width:`${this.width}px`,
+        height:`${this.pieheight}px`,
+        width:`${this.piewidth}px`,
         margin:'0 auto'
       }
+    },
+    bar_chart_styles(){
+      return {
+        height:`${this.barheight}px`,
+        width:`${this.barwidth}px`,
+        margin:'0 auto'
+      }
+    }
+  },
+  watch:{
+    windowWidth(){
+      this.resize_charts();
     }
   },
   methods:{
@@ -85,15 +100,27 @@ export default {
     },
     resize_charts(){
       const width = window.innerWidth;
+      //exist record
       if (width < 576 && width > 400){
-        this.height = 400;
-        this.width = 400;
+        this.pieheight = 400;
+        this.piewidth = 400;
+        this.barheight = 400;
+        this.barwidth = 400;
       }else if (width < 400 && width > 300){
-        this.height = 300;
-        this.width = 300;
+        this.pieheight = 300;
+        this.piewidth = 300;
+        this.barheight = 300;
+        this.barwidth = 300;
       }else if (width < 300){
-        this.height = 200;
-        this.width = 200;
+        this.pieheight = 200;
+        this.piewidth = 200;
+        this.barheight = 250;
+        this.barwidth = 250;
+      }
+      //no records
+      if(!this.today_records){
+        this.pieheight = 150;
+        this.piewidth = 150;
       }
     }
   },
@@ -126,6 +153,9 @@ export default {
         this.norecords = true;
       }
     }catch(e){
+      this.$store.dispatch('updateEmail',null);
+      this.$store.dispatch('updateIdToken',null);
+      this.$router.push('/login');
       console.log(e)
     }
   },
@@ -144,6 +174,12 @@ export default {
   min-height:1000px;
 }
 
+@media (min-height:1300px){
+  .dashboard {
+    min-height:1400px;
+  }
+}
+
 .table {
   justify-self:center;
   align-self:flex-start;
@@ -159,9 +195,5 @@ export default {
 .table td {
   text-align:center;
   color:lightcyan;
-}
-
-.norecords {
-  margin-left:130px;
 }
 </style>

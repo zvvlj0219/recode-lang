@@ -149,6 +149,9 @@ export default {
         });
         this.modal_lang = this.selectable_lang[0].language;
       }catch(e){
+        this.$store.dispatch('updateEmail',null);
+        this.$store.dispatch('updateIdToken',null);
+        this.$router.push('/login');
         console.log(e)
       }
     },

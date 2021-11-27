@@ -58,13 +58,6 @@ export default new Router({
       path:'/login',
       name:'login',
       component:login,
-      beforeEnter(from,to,next){
-        if(store.getters.idToken){
-          next('/dashboard')
-        }else{
-          next();
-        }
-      }
     },
     {
       path:'/register',
@@ -73,9 +66,8 @@ export default new Router({
     },
     {
       path:'*',
-      redirect:'/login'
+      redirect:'/dashboard'
     },
   ]
 })
-
 

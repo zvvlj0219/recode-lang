@@ -105,12 +105,12 @@
             class="btn start_btn"
             v-show="!clockEvent"
             v-on:click="startTimer();clockEvent = true;"
-          >start</div>
+          >スタート</div>
           <div 
             class="btn cancel_btn"
             v-show="clockEvent"
             v-on:click="cancelTimer();clockEvent = false;"
-          >cancel</div>
+          >中止</div>
         </div>
       </div>
       <div class="record-wrapper">
@@ -161,6 +161,9 @@ export default {
     try{
       this.init();
     }catch(e){
+      this.$store.dispatch('updateEmail',null);
+      this.$store.dispatch('updateIdToken',null);
+      this.$router.push('/login');
       console.log(e)
     }
   },
@@ -382,7 +385,7 @@ export default {
   height:60px;
   text-align:center;
   margin:0 auto;
-  font-size:3rem;
+  font-size:2.5rem;
   margin-top:20px;
   border-radius:10px;
   color:#333;

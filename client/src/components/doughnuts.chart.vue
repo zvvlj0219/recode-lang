@@ -57,7 +57,7 @@ export default {
         },
         title: {
           display: true,
-          text: "Today's record",
+          text: "今日の記録",
           fontSize: 18,
           position: 'top'
         },

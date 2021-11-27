@@ -20,7 +20,6 @@ router.post('/register',async (req,res)=>{
     return res.status(400).send('Email already exists');
   }
   
-  
   //hash passwords
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(req.body.password, salt);
@@ -89,8 +88,12 @@ router.post('/login', async (req,res)=>{
 });
 
 router.get('/logout', async (req,res)=>{
-  console.log('get logout')
-  res.clearCookie("access_data").send({mesage:'successfully logged out'})
+  try{
+    console.log('get logout')
+    res.clearCookie("access_data").send({mesage:'successfully logged out'})
+  }catch(err){
+    console.log(err)
+  }
 });
 
 

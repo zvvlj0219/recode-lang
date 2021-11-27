@@ -55,6 +55,7 @@ a {
 
 #register input,
 #login input {
+  margin:5px;
   width:90%;
   height:25px;
   background-color:rgba(73, 80, 87,0.5);

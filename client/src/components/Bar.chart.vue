@@ -49,7 +49,6 @@ export default {
         ],
         datasets: [
           {
-            label:'weelky record',
             //data array
             data:this.weekly.map(el=>{
               return el.study_time/60;
@@ -98,7 +97,7 @@ export default {
         },
         title: {
           display: true,
-          text: "Weekly record",
+          text: "週間記録",
           fontSize: 18,
           position: 'top'
         },

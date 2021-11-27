@@ -74,25 +74,44 @@
 /* media query */
 /* pc */
 @media (min-width:1200px){
+  .today{
+    align-self: flex-start;
+    margin-top:20px;
+  }
+  
+  .norecordsmsg {
+    margin:30px;
+  }
   .weekly {
     grid-column: 2;
     grid-row: 1;
+    align-self:flex-start;
   }
+
 }
 
 
 /* tablet */
 @media (max-width:1100px){
   .dashboard .grid {
-    grid-template-columns: repeat(1,1fr);
-    grid-template-rows: 2fr 1fr 2fr;  
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.5fr 0.4fr 1fr;  
     gap:30px;
   }
+  
+  .today{
+    align-self: flex-start;
+    margin-top:20px;
+  }
+  
   
   .today,.table,.weekly{
     justify-self: center;
   }
   
+  .norecordsmsg {
+    margin:30px;
+  }
   .weekly {
     margin-bottom: 70px;
   }
@@ -111,3 +130,4 @@
     display: block;
   }
 } 
+

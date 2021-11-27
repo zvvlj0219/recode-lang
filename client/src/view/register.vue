@@ -3,18 +3,15 @@
     <h2>&lt;record-lang&gt;</h2>
     <form>
       <div>
-        <label for="Email1" >Email address : </label>
+        <label for="Email1" >Eメールアドレス : </label>
         <input 
           type="email" 
           id="Email1" 
           v-model="register_email"
         >
-        <div id="emailHelp" class="form-text">
-          <p class="text-dimgray">We'll never share your email with anyone else.</p>
-        </div>
       </div>
       <div>
-        <label for="exampleInputUsername1">User name : </label>
+        <label for="exampleInputUsername1">ニックネーム : </label>
         <input 
           type="text" 
           id="exampleInputUsername1"
@@ -22,7 +19,7 @@
         >
       </div>
       <div >
-        <label for="exampleInputPassword1" >Password : </label>
+        <label for="exampleInputPassword1" >パスワード : </label>
         <input 
           type="password" 
           id="exampleInputPassword1"
@@ -32,7 +29,7 @@
       <input 
         type="button" 
         v-on:click="submit_register()"
-        value="register"
+        value="新規登録"
       >
     </form>    
   </div>

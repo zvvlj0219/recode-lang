@@ -42,7 +42,7 @@ const staticFileMiddleware = express.static(__dirname + '/public');
 app.use(staticFileMiddleware);
 app.use(history({
   disableDotRule: true,
-  verbose: true
+  // verbose: true
 }));
 app.use(staticFileMiddleware);
 
@@ -52,7 +52,6 @@ app.use('/api/v1/todo',todoRoute);
 app.use('/api/v1/timer',timerRoute);
 app.use('/api/v1/account',authRoute);
 app.use('/api/v1/account',authRoute);
-
 
 //handle production
 if(process.env.NODE_ENV === 'production'){

@@ -18,6 +18,12 @@ class authService {
       password:password
     })
   }
+  
+  //logout 
+  static logout(){
+    console.log('logout')
+    return axios.get(`${url}/logout`)
+  }
 }
 
 export default authService;

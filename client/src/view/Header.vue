@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div class="email">
-      <p>{{loggedinEmail}}</p>
+      <p>{{loginEmail()}}</p>
       <div 
         class="dropdown-list"
         v-on:click="toggleList"
@@ -13,7 +13,7 @@
       v-bind:class="{listactive :droplist}" 
     >
       <div v-if="loginStatus">
-        <p v-on:click="logout">ログアウト</p>
+        <p v-on:click="logout()">ログアウト</p>
       </div>
       <div v-else>
         <p v-on:click="$router.push('/login');toggleList()">ログイン</p>
@@ -24,38 +24,39 @@
 </template>
 
 <script>
+import authService from '../modules/authService'
+
 export default {
   name:'Header',
   data(){
     return {
       droplist:false,
+      // loginEmail:null,
       loginStatus:null
-    }
-  },
-  computed:{
-    loggedinEmail(){
-      return this.$store.getters.email;
-    }
-  },
-  watch:{
-    $route(){
-      if(this.$store.getters.idToken){
-        this.loginStatus = true
-      }
     }
   },
   methods:{
     toggleList(){
       this.droplist = !this.droplist;
     },
-    logout(){
-      if(this.$store.getters.idToken){
+    loginEmail(){
+      const login = this.$store.getters.email;
+      if(!login){
+        return
+      }
+      this.loginStatus = true;
+      return login;
+    },
+    async logout(){
+      try{
+        await authService.logout();
         this.droplist = false;
+        this.loginStatus = false;
         this.$store.dispatch('updateEmail',null);
         this.$store.dispatch('updateIdToken',null);
         this.$router.push('/login')
-      }else{
-        return;
+      }catch(err){
+        console.log(err)
       }
     }
   }
