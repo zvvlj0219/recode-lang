@@ -33,7 +33,7 @@ a {
 /*login register*/
 #register h2,
 #login h2 {
-  font-size: 4rem;
+  font-size: 3.3rem;
   text-align: center;
   margin-top:30px;
 }
@@ -61,26 +61,38 @@ a {
   background-color:rgba(73, 80, 87,0.5);
   color:lightcyan;
 }
+
 #register input[type="button"],
 #login input[type="button"] {
   width:150px;
   height:40px;
-  margin-top: 20px;
-  margin-left:50px;
   display: block;
   background:#ff6d00;
   border-radius: 7px;
   border:none;
   color:#333;
-  font-size:1.3rem;
+  font-size:1.1rem;
 }
-
 
 
 @media (min-width:1200px){
   #register form,
   #login form {
     width:500px;
+    height: 300px;
+  }
+  #register input[type="button"],
+  #login input[type="button"] {
+    width:150px;
+    height:40px;
+    margin-top: 20px;
+    margin-left:50px;
+    display: block;
+    background:#ff6d00;
+    border-radius: 7px;
+    border:none;
+    color:#333;
+    font-size:1.1rem;
   }
 }
 
@@ -89,5 +101,19 @@ a {
   #login form {
     width:70%;
   }
+
+  #register input[type="button"],
+  #login input[type="button"] {
+    width:100px;
+    height:30px;
+    margin-top: 10px;
+    display: block;
+    background:#ff6d00;
+    border-radius: 7px;
+    border:none;
+    color:#333;
+    font-size:1.1rem;
+  }
+  
 }
 

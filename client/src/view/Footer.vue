@@ -42,8 +42,8 @@ export default {
 }
 
 .footer .font{
-  width:30px;
-  height:30px;
+  width:25px;
+  height:25px;
 }
 
 /* footer Extra small device (less than 576px) */
@@ -52,12 +52,12 @@ export default {
     position: fixed;
     bottom: 0;
     background-color:#fff;
-    height: 55px;
+    height: 45px;
     width:100%;
     display:block;
   }
   .footer-list {
-    margin-top:10px;
+    margin-top:7px;
     display: flex;
     justify-content: space-around;
   }

@@ -76,6 +76,7 @@ export default {
 
 <style scoped>
 #login{
+  max-width:100%;
   height:100vh;
   color:lightcyan;
 }

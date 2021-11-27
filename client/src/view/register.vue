@@ -70,6 +70,7 @@ export default {
 
 <style scoped>
 #register{
+  max-width:100%;
   height:100vh;
   color:lightcyan;
 }
